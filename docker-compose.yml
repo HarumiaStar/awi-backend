@@ -1,0 +1,23 @@
+version: '3.8'
+
+networks:
+  awi:
+    driver: bridge
+    name: awi
+
+services:
+  postgres:
+    container_name: postgres_awi
+    image: postgres:13
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    networks:
+      - awi
+
+volumes:
+  postgres_volume:
