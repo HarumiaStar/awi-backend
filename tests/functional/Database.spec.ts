@@ -22,7 +22,9 @@ test.group('Database', (group) => {
       password: 'password'
     })
     await volunteer.save()
-    return () => Database.rollbackGlobalTransaction()
+  })
+  group.each.teardown(async () => {
+    Database.rollbackGlobalTransaction()
   })
 
   test('create new volunteer', async ({ assert }) => {
