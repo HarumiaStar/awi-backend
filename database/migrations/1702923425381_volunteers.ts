@@ -11,7 +11,7 @@ export default class extends BaseSchema {
       table.string('email').unique().notNullable()
       table.enum('tshirt_size', ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL']).notNullable()
       table.bigint('nb_edition_performed').notNullable()
-      table.enum('lodging', ['propisition', 'recherche', 'aucun']).notNullable()
+      table.enum('lodging', ['propisition', 'recherche', 'aucun']).notNullable() // Lodging => Hébergement
       table.string('address').nullable()
       table.string('phone', 10).nullable()
       table.string('username').nullable()

@@ -12,6 +12,7 @@
 
 ```bash
 npm install
+npm run initDB
 ```
 
 ## Usage
@@ -32,3 +33,19 @@ npm start
 ```bash
 docker-compose up
 ```
+
+## Tests
+
+**Attention :** ne pas lancer les tests sur la base de données de production.
+
+```bash
+npm run initDB
+npm run test
+```
+
+
+## Documentation
+
+### Technologies utilisées
+
+
