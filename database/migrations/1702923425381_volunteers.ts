@@ -19,6 +19,8 @@ export default class extends BaseSchema {
       table.enum('food_regime', ['vegetarien', 'carnivore', 'autre']).notNullable()
       table.boolean('is_admin').notNullable()
       table.boolean('is_present').notNullable()
+      table.string('password', 180).notNullable()
+      table.string('remember_me_token').nullable()
 
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
