@@ -8,7 +8,9 @@
     "start": "node server.js",
     "test": "node ace test",
     "lint": "eslint . --ext=.ts",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "initDB": "node ace migration:run",
+    "dropDB": "node ace migration:rollback"
   },
   "eslintConfig": {
     "extends": [
@@ -55,9 +57,12 @@
     "youch-terminal": "^2.2.3"
   },
   "dependencies": {
+    "@adonisjs/auth": "^8.2.3",
     "@adonisjs/core": "^5.8.0",
     "@adonisjs/lucid": "^18.4.2",
     "@adonisjs/repl": "^3.1.0",
+    "buffer-alloc": "^1.2.0",
+    "klona": "^2.0.6",
     "luxon": "^3.4.4",
     "pg": "^8.11.3",
     "proxy-addr": "^2.0.7",

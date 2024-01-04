@@ -1,5 +1,13 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, beforeCreate, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel,
+  column,
+  beforeCreate,
+  manyToMany,
+  ManyToMany,
+  beforeSave,
+} from '@ioc:Adonis/Lucid/Orm'
+import Hash from '@ioc:Adonis/Core/Hash'
 import { randomUUID } from 'node:crypto'
 import Association from 'App/Models/Association'
 
@@ -68,6 +76,12 @@ export default class Volunteer extends BaseModel {
   @column()
   public isPresent: boolean
 
+  @column({ serializeAs: null })
+  public password: string
+
+  @column()
+  public rememberMeToken: string | null
+
   @manyToMany(() => Association)
   public associations: ManyToMany<typeof Association>
 
@@ -80,5 +94,12 @@ export default class Volunteer extends BaseModel {
   @beforeCreate()
   public static async generateUuid(model: Volunteer) {
     model.id = randomUUID()
+  }
+
+  @beforeSave()
+  public static async hashPassword(volunteer: Volunteer) {
+    if (volunteer.$dirty.password) {
+      volunteer.password = await Hash.make(volunteer.password)
+    }
   }
 }
