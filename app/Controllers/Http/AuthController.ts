@@ -2,12 +2,16 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import RegisterVolunteerValidator from 'App/Validators/RegisterVolunteerValidator'
 import Volunteer from 'App/Models/Volunteer'
 import LoginVolunteerValidator from 'App/Validators/LoginVolunteerValidator'
-import Hash from '@ioc:Adonis/Core/Hash'
 
 export default class AuthController {
   public async register({ request, response }: HttpContextContract) {
     const payload = await request.validate(RegisterVolunteerValidator)
-    await Volunteer.create(payload)
+    const modifiedPayload = {
+      ...payload,
+      isAdmin: false,
+      isPresent: false,
+    }
+    await Volunteer.create(modifiedPayload)
     return response.status(201).json({ message: 'Volunteer created' })
   }
 

@@ -1,8 +1,8 @@
-import { schema, rules, CustomMessages } from '@ioc:Adonis/Core/Validator'
+import { schema, CustomMessages, rules } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { FoodRegimeEnum, LodgingEnum, TshirtSizeEnum } from 'App/Models/Volunteer'
 
-export default class RegisterVolunteerValidator {
+export default class UpdateVolunteerValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   /*
@@ -25,22 +25,19 @@ export default class RegisterVolunteerValidator {
    *    ```
    */
   public schema = schema.create({
-    firstname: schema.string([
-      rules.required(),
+    firstname: schema.string.optional([
       rules.trim(),
       rules.escape(),
       rules.minLength(2),
       rules.maxLength(255),
     ]),
-    lastname: schema.string([
-      rules.required(),
+    lastname: schema.string.optional([
       rules.trim(),
       rules.escape(),
       rules.minLength(2),
       rules.maxLength(255),
     ]),
-    email: schema.string([
-      rules.required(),
+    email: schema.string.optional([
       rules.trim(),
       rules.escape(),
       rules.minLength(3),
@@ -49,16 +46,11 @@ export default class RegisterVolunteerValidator {
         allowIpDomain: true,
         domainSpecificValidation: true,
       }),
-      rules.normalizeEmail({
-        allLowercase: true,
-        gmailRemoveDots: true,
-        gmailRemoveSubaddress: true,
-      }),
       rules.unique({ table: 'volunteers', column: 'email' }),
     ]),
-    tshirt_size: schema.enum(Object.values(TshirtSizeEnum)),
-    nb_edition_performed: schema.bigint([rules.required(), rules.trim(), rules.escape()]),
-    lodging: schema.enum(Object.values(LodgingEnum)),
+    tshirt_size: schema.enum.optional(Object.values(TshirtSizeEnum)),
+    nb_edition_performed: schema.bigint.optional([rules.trim(), rules.escape()]),
+    lodging: schema.enum.optional(Object.values(LodgingEnum)),
     address: schema.string.nullableAndOptional([
       rules.trim(),
       rules.escape(),
@@ -83,8 +75,10 @@ export default class RegisterVolunteerValidator {
       rules.minLength(2),
       rules.maxLength(255),
     ]),
-    food_regime: schema.enum(Object.values(FoodRegimeEnum)),
-    password: schema.string([rules.required(), rules.trim(), rules.minLength(8)]),
+    food_regime: schema.enum.optional(Object.values(FoodRegimeEnum)),
+    is_admin: schema.boolean.optional(),
+    is_present: schema.boolean.optional(),
+    password: schema.string.optional([rules.trim(), rules.minLength(8)]),
   })
 
   /**
