@@ -7,10 +7,11 @@
     "build": "node ace build --production",
     "start": "node server.js",
     "test": "node ace test",
+    "continuous_test": "node ace test --watch",
     "lint": "eslint . --ext=.ts",
     "format": "prettier --write .",
-    "initDB": "node ace migration:run",
-    "dropDB": "node ace migration:rollback"
+    "migrate": "node ace migration:run",
+    "rollback": "node ace migration:rollback"
   },
   "eslintConfig": {
     "extends": [

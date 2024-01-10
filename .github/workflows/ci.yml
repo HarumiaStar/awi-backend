@@ -18,8 +18,17 @@ jobs:
       with:
         node-version: 14
 
+    - name: Install docker-compose
+      run: sudo apt-get install -y docker-compose
+
     - name: Install dependencies
       run: npm install
+
+    - name: Database setup
+      run: docker-compose up -d
+
+    - name: Database migration
+      run: npm run migrate
 
     - name: Run tests
       run: npm run test
