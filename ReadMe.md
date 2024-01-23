@@ -73,7 +73,7 @@ Quelques spécificités de la syntaxe des tests :
 
 **Route :** `POST /auth/register`
 
-**Paramètres :**
+**Body :**
 - `firstname` : prénom de l'utilisateur
 - `lastname` : nom de l'utilisateur
 - `email` : email de l'utilisateur
@@ -86,11 +86,16 @@ Quelques spécificités de la syntaxe des tests :
 - `food_regime` : régime alimentaire de l'utilisateur (vegetarien, carnivore, autre)
 - `password` : mot de passe de l'utilisateur
 
+**Réponse :**
+Soit :
+- `201` : si l'utilisateur a été créé
+- `400` : si la requête est mal formée
+
 ### Login
 
 **Route :** `POST /auth/login`
 
-**Paramètres :**
+**Body :**
 - `email` : email de l'utilisateur
 - `password` : mot de passe de l'utilisateur
 
@@ -101,3 +106,8 @@ Soit :
 
 
 ### Logout
+
+**Route :** `POST /auth/logout`
+
+**Body :**
+- `Authorization` : token d'authentification de l'utilisateur
