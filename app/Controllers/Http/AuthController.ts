@@ -7,7 +7,12 @@ import Hash from '@ioc:Adonis/Core/Hash'
 export default class AuthController {
   public async register({ request, response }: HttpContextContract) {
     const payload = await request.validate(RegisterVolunteerValidator)
-    await Volunteer.create(payload)
+    const res = await Volunteer.create(payload)
+
+    if (!res.$isPersisted) {
+      return response.badRequest('Failed to create volunteer')
+    }
+
     return response.status(201).json({ message: 'Volunteer created' })
   }
 

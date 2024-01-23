@@ -100,5 +100,36 @@ export default class RegisterVolunteerValidator {
    * }
    *
    */
-  public messages: CustomMessages = {}
+  public messages: CustomMessages = {
+    'firstname.required': 'Le prénom est requis',
+    'firstname.minLength': 'Le prénom doit contenir au moins 2 caractères',
+    'firstname.maxLength': 'Le prénom doit contenir au maximum 255 caractères',
+    'lastname.required': 'Le nom est requis',
+    'lastname.minLength': 'Le nom doit contenir au moins 2 caractères',
+    'lastname.maxLength': 'Le nom doit contenir au maximum 255 caractères',
+    'email.required': 'L\'email est requis',
+    'email.email': 'L\'email doit être valide',
+    'email.minLength': 'L\'email doit contenir au moins 3 caractères',
+    'email.unique': 'L\'email est déjà utilisé',
+    'tshirt_size.required': 'La taille de t-shirt est requise',
+    'tshirt_size.enum': 'La taille de t-shirt doit être valide',
+    'nb_edition_performed.required': 'Le nombre d\'éditions effectuées est requis',
+    'nb_edition_performed.bigint': 'Le nombre d\'éditions effectuées doit être valide',
+    'lodging.required': 'Le type de logement est requis',
+    'lodging.enum': 'Le type de logement doit être valide',
+    'address.minLength': 'L\'adresse doit contenir au moins 10 caractères',
+    'address.maxLength': 'L\'adresse doit contenir au maximum 255 caractères',
+    'phone.mobile': 'Le numéro de téléphone doit être valide',
+    'phone.minLength': 'Le numéro de téléphone doit contenir au moins 10 caractères',
+    'username.minLength': 'Le nom d\'utilisateur doit contenir au moins 2 caractères',
+    'username.maxLength': 'Le nom d\'utilisateur doit contenir au maximum 255 caractères',
+    'avatar_url.minLength': 'L\'URL de l\'avatar doit contenir au moins 2 caractères',
+    'avatar_url.maxLength': 'L\'URL de l\'avatar doit contenir au maximum 255 caractères',
+    'food_regime.required': 'Le régime alimentaire est requis',
+    'food_regime.enum': 'Le régime alimentaire doit être valide',
+    'is_admin.boolean': 'Le statut administrateur doit être valide',
+    'is_present.boolean': 'Le statut présent doit être valide',
+    'password.required': 'Le mot de passe est requis',
+    'password.minLength': 'Le mot de passe doit contenir au moins 8 caractères',
+  }
 }
