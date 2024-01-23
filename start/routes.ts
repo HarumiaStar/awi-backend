@@ -21,9 +21,16 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 Route.group(() => {
+  // Authentification
   Route.post('/auth/register', 'AuthController.register')
   Route.post('/auth/login', 'AuthController.login')
   Route.post('/auth/logout', 'AuthController.logout')
+
+  // Volunteer
+  Route.get('/volunteers', 'VolunteersController.index')
+  Route.get('/volunteers/:id', 'VolunteersController.show')
+  Route.put('/volunteers/:id', 'VolunteersController.update')
+  Route.delete('/volunteers/:id', 'VolunteersController.destroy')
 }).prefix('/api')
 
 Route.get('/', () => {

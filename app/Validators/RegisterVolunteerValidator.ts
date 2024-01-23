@@ -84,8 +84,6 @@ export default class RegisterVolunteerValidator {
       rules.maxLength(255),
     ]),
     food_regime: schema.enum(Object.values(FoodRegimeEnum)),
-    is_admin: schema.boolean(),
-    is_present: schema.boolean(),
     password: schema.string([rules.required(), rules.trim(), rules.minLength(8)]),
   })
 
