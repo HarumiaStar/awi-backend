@@ -84,8 +84,6 @@ Quelques spécificités de la syntaxe des tests :
 - `phone_number` : numéro de téléphone de l'utilisateur (peut être vide)
 - `avatar_url` : url de l'avatar de l'utilisateur (peut être vide)
 - `food_regime` : régime alimentaire de l'utilisateur (vegetarien, carnivore, autre)
-- `is_admin` : si l'utilisateur est administrateur ou non // TODO : est-ce que c'est dans le register que ça doit se faire ?
-- `is_present` : si l'utilisateur est présent ou non // TODO : est-ce que c'est utile de le mettre durant le register ?
 - `password` : mot de passe de l'utilisateur
 
 ### Login
