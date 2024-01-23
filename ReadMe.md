@@ -56,8 +56,50 @@ Quelques spécificités de la syntaxe des tests :
 - On peut définir des fonctions qui seront exécutées avant chaque test avec `test.each.setup()`, ce qui est dans setup permet de mettre en place la base de données.
 - On peut définir des fonctions qui seront exécutés après chaque test avec `test.each.teardown()`, ce qui est dans teardown permet de nettoyer la base de données.
 
-## Documentation
 
 ### Technologies utilisées
 
 
+- NodeJS
+- Typescript
+- AdonisJS
+
+# Routes
+
+## Authentification
+
+
+### Register
+
+**Route :** `POST /auth/register`
+
+**Paramètres :**
+- `firstname` : prénom de l'utilisateur
+- `lastname` : nom de l'utilisateur
+- `email` : email de l'utilisateur
+- `tshirt_size` : taille du t-shirt de l'utilisateur (XS, S, M, L, XL, XXL, XXXL)
+- `nb_edition_perfomed` : nombre d'éditions auxquelles l'utilisateur a participé
+- `lodging` : type de logement de l'utilisateur (proposition, recherche, aucun)
+- `address` : adresse de l'utilisateur (peut être vide)
+- `phone_number` : numéro de téléphone de l'utilisateur (peut être vide)
+- `avatar_url` : url de l'avatar de l'utilisateur (peut être vide)
+- `food_regime` : régime alimentaire de l'utilisateur (vegetarien, carnivore, autre)
+- `is_admin` : si l'utilisateur est administrateur ou non // TODO : est-ce que c'est dans le register que ça doit se faire ?
+- `is_present` : si l'utilisateur est présent ou non // TODO : est-ce que c'est utile de le mettre durant le register ?
+- `password` : mot de passe de l'utilisateur
+
+### Login
+
+**Route :** `POST /auth/login`
+
+**Paramètres :**
+- `email` : email de l'utilisateur
+- `password` : mot de passe de l'utilisateur
+
+**Réponse :**
+Soit :
+- `token` : token d'authentification de l'utilisateur
+- `401` : si l'authentification a échoué
+
+
+### Logout

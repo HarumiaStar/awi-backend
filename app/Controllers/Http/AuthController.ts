@@ -6,12 +6,19 @@ import LoginVolunteerValidator from 'App/Validators/LoginVolunteerValidator'
 export default class AuthController {
   public async register({ request, response }: HttpContextContract) {
     const payload = await request.validate(RegisterVolunteerValidator)
+    
     const modifiedPayload = {
       ...payload,
       isAdmin: false,
       isPresent: false,
     }
-    await Volunteer.create(modifiedPayload)
+    
+    const res = await Volunteer.create(modifiedPayload)
+
+    if (!res.$isPersisted) {
+      return response.badRequest('Failed to create volunteer')
+    }
+
     return response.status(201).json({ message: 'Volunteer created' })
   }
 
