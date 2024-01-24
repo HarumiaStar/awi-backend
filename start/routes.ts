@@ -25,6 +25,7 @@ Route.group(() => {
   Route.post('/auth/register', 'AuthController.register')
   Route.post('/auth/login', 'AuthController.login')
   Route.post('/auth/logout', 'AuthController.logout')
+  Route.get('/auth/hash-seed', 'AuthController.getHashSeed')
 
   // Volunteer
   Route.get('/volunteers', 'VolunteersController.index')
