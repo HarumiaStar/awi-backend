@@ -78,7 +78,7 @@ Quelques spécificités de la syntaxe des tests :
 - `lastname` : nom de l'utilisateur
 - `email` : email de l'utilisateur
 - `tshirt_size` : taille du t-shirt de l'utilisateur (XS, S, M, L, XL, XXL, XXXL)
-- `nb_edition_perfomed` : nombre d'éditions auxquelles l'utilisateur a participé
+- `nb_edition_performed` : nombre d'éditions auxquelles l'utilisateur a participé
 - `lodging` : type de logement de l'utilisateur (proposition, recherche, aucun)
 - `address` : adresse de l'utilisateur (peut être vide)
 - `phone_number` : numéro de téléphone de l'utilisateur (peut être vide)

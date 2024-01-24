@@ -46,7 +46,7 @@ export default class AuthController {
     
     // Return hash seed if it exists
     if (hashSeed) {
-      return response.ok(hashSeed)
+      return response.ok({"hashSeed": hashSeed})
     }
 
     // return 500 if hash seed does not exist
