@@ -29,6 +29,7 @@ Route.group(() => {
 
   // Volunteer
   Route.get('/volunteers', 'VolunteersController.index')
+  Route.get('/volunteers/me', 'VolunteersController.showSelf')
   Route.get('/volunteers/:id', 'VolunteersController.show')
   Route.put('/volunteers/:id', 'VolunteersController.update')
   Route.delete('/volunteers/:id', 'VolunteersController.destroy')

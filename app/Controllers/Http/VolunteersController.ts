@@ -27,4 +27,14 @@ export default class VolunteersController {
     const volunteer = await Volunteer.findOrFail(request.params().id)
     await volunteer.delete()
   }
-}
+
+  public async showSelf({ auth, response}: HttpContextContract) {
+    if (!auth.user) {
+      return response.unauthorized('Invalid credentials')
+    }
+
+    const volunteer = await Volunteer.findOrFail(auth.user.id)
+
+    return response.ok(volunteer)
+  }
+ }
