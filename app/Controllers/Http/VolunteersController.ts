@@ -29,12 +29,24 @@ export default class VolunteersController {
   }
 
   public async showSelf({ auth, response}: HttpContextContract) {
-    if (!auth.user) {
-      return response.unauthorized('Invalid credentials')
+
+    const volunteer = await auth.use('api').authenticate()
+
+    const result = {
+      firstname: volunteer.firstname,
+      lastname: volunteer.lastname,
+      email: volunteer.email,
+      address: volunteer.address,
+      phone: volunteer.phone,
+      username: volunteer.username,
+      avatarUrl: volunteer.avatarUrl,
+      nbEditionPerformed: volunteer.nbEditionPerformed,
+      tshirtSize: volunteer.tshirtSize,
+      lodging: volunteer.lodging,
+      foodRegime: volunteer.foodRegime,
+      isAdmin: volunteer.isAdmin
     }
 
-    const volunteer = await Volunteer.findOrFail(auth.user.id)
-
-    return response.ok(volunteer)
+    return response.ok(result)
   }
  }
