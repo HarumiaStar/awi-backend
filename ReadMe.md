@@ -111,3 +111,20 @@ Soit :
 
 **Body :**
 - `Authorization` : token d'authentification de l'utilisateur
+
+**Réponse :**
+`{ revoked: true }`
+
+### get hash seed
+
+**Description :** 
+Récupère le hash seed afin que l'utilisateur puisse hasher son mot de passe en local
+
+**Route :** `GET /auth/hash-seed`
+
+**Réponse :**
+```json
+{
+    "hashSeed": "seed"
+}
+```
