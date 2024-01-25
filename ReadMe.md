@@ -141,7 +141,7 @@ Récupère le hash seed afin que l'utilisateur puisse hasher son mot de passe en
 
 ## Volunteers
 
-### Self
+### get Self
 
 **Description :**
 Récupère les informations de l'utilisateur connecté
@@ -169,3 +169,35 @@ Récupère les informations de l'utilisateur connecté
     "isAdmin": false
 }
 ```
+
+### update Self
+
+**Description :**
+Met à jour les informations de l'utilisateur connecté
+
+**Route :** `PUT /volunteers/me`
+
+**Body :**
+- `Authorization` : token d'authentification de l'utilisateur
+- Partial de : 
+```json
+{
+    "firstname": "John",
+    "lastname": "Doe",
+    "email": "jhondoe@gmail.com",
+    "address": "1 rue de la paix",
+    "phone": "0123456789",
+    "username": "jdoe",
+    "avatarUrl": "lien",
+    "nbEditionPerformed": 2,
+    "tshirtSize": "M",
+    "lodging": "proposition",
+    "foodRegime": "vegetarien",
+}
+```
+
+**Réponse :**
+Soit :
+- `200` : si l'utilisateur a été mis à jour
+- `400` : si la requête est mal formée
+
