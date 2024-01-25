@@ -128,3 +128,23 @@ Récupère le hash seed afin que l'utilisateur puisse hasher son mot de passe en
     "hashSeed": "seed"
 }
 ```
+
+## Volunteers
+
+### Self
+
+**Description :**
+Récupère les informations de l'utilisateur connecté
+
+**Route :** `GET /volunteers/me`
+
+**Body :**
+- `Authorization` : token d'authentification de l'utilisateur
+
+**Réponse :**
+```json
+{
+    "id": 1,
+    "firstname": "John",
+    "lastname": "Doe",
+    "email": "
