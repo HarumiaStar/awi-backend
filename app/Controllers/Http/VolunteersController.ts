@@ -45,11 +45,11 @@ export default class VolunteersController {
       address: volunteer.address,
       phone: volunteer.phone,
       username: volunteer.username,
-      avatarUrl: volunteer.avatarUrl,
-      nbEditionPerformed: volunteer.nbEditionPerformed,
-      tshirtSize: volunteer.tshirtSize,
+      avatar_url: volunteer.avatarUrl,
+      nb_edition_performed: Number(volunteer.nbEditionPerformed),
+      tshirt_size: volunteer.tshirtSize,
       lodging: volunteer.lodging,
-      foodRegime: volunteer.foodRegime,
+      food_regime: volunteer.foodRegime,
       isAdmin: volunteer.isAdmin
     }
 
