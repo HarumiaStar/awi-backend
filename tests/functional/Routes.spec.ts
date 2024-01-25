@@ -136,6 +136,46 @@ test.group('Routes', (group) => {
         assert.equal(compareAny(response.body(), volunteerData), true);
     })
 
+    test('Logout remove token', async ({ assert, client }) => {
+        const response = await client.post('/api/auth/logout').header('Authorization', `Bearer ${token}`);
+
+        token = response.body().token;
+
+        if (response.status() !== 200) {
+            console.log(response.error());
+            console.log(response.text());
+        }
+
+        assert.equal(response.status(), 200);
+
+        const response2 = await client.get('/api/volunteers/me').header('Authorization', `Bearer ${token}`);
+
+        if (response2.status() !== 401) {
+            console.log(response2.error());
+            console.log(response2.text());
+        }
+
+        assert.equal(response2.status(), 401);
+
+        // Log back in
+        const volunteerData = {
+            email: 'jhondoe' + id + '@gmail.com',
+            password: encryptWithHashSeed('password' + id),
+        }
+
+        const response3 = await client.post('/api/auth/login').json(volunteerData);
+
+        if (response3.status() !== 200) {
+            console.log(response3.error());
+            console.log(response3.text());
+        }
+
+        token = response3.body().token;
+
+        assert.equal(response3.status(), 200);
+
+    })
+
     /* --------------------------- TEST THAT NOT WORK --------------------------- */
 
     test('Register with existing email', async ({ assert, client }) => {
