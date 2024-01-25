@@ -23,7 +23,7 @@ export enum TshirtSizeEnum {
 }
 
 export enum LodgingEnum {
-  propisition = 'propisition',
+  propisition = 'proposition',
   recherche = 'recherche',
   aucun = 'aucun',
 }
