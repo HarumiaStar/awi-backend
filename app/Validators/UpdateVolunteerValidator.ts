@@ -49,7 +49,7 @@ export default class UpdateVolunteerValidator {
       rules.unique({ table: 'volunteers', column: 'email' }),
     ]),
     tshirt_size: schema.enum.optional(Object.values(TshirtSizeEnum)),
-    nb_edition_performed: schema.bigint.optional([rules.trim(), rules.escape()]),
+    nb_edition_performed: schema.number.optional([rules.trim(), rules.escape()]),
     lodging: schema.enum.optional(Object.values(LodgingEnum)),
     address: schema.string.nullableAndOptional([
       rules.trim(),

@@ -57,7 +57,7 @@ export default class RegisterVolunteerValidator {
       rules.unique({ table: 'volunteers', column: 'email' }),
     ]),
     tshirt_size: schema.enum(Object.values(TshirtSizeEnum)),
-    nb_edition_performed: schema.bigint([rules.required(), rules.trim(), rules.escape()]),
+    nb_edition_performed: schema.number([rules.required(), rules.trim(), rules.escape()]),
     lodging: schema.enum(Object.values(LodgingEnum)),
     address: schema.string.nullableAndOptional([
       rules.trim(),
