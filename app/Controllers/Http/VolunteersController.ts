@@ -27,4 +27,26 @@ export default class VolunteersController {
     const volunteer = await Volunteer.findOrFail(request.params().id)
     await volunteer.delete()
   }
-}
+
+  public async showSelf({ auth, response}: HttpContextContract) {
+
+    const volunteer = await auth.use('api').authenticate()
+
+    const result = {
+      firstname: volunteer.firstname,
+      lastname: volunteer.lastname,
+      email: volunteer.email,
+      address: volunteer.address,
+      phone: volunteer.phone,
+      username: volunteer.username,
+      avatarUrl: volunteer.avatarUrl,
+      nbEditionPerformed: volunteer.nbEditionPerformed,
+      tshirtSize: volunteer.tshirtSize,
+      lodging: volunteer.lodging,
+      foodRegime: volunteer.foodRegime,
+      isAdmin: volunteer.isAdmin
+    }
+
+    return response.ok(result)
+  }
+ }
