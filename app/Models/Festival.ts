@@ -6,6 +6,9 @@ export default class Festival extends BaseModel {
   public id: string
 
   @column()
+  public title: string
+
+  @column()
   public startDate: Date
 
   @column()

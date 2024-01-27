@@ -193,7 +193,7 @@ Met à jour les informations de l'utilisateur connecté
     "nbEditionPerformed": 2,
     "tshirtSize": "M",
     "lodging": "proposition",
-    "foodRegime": "vegetarien",
+    "foodRegime": "vegetarien"
 }
 ```
 
@@ -202,3 +202,118 @@ Soit :
 - `200` : si l'utilisateur a été mis à jour
 - `400` : si la requête est mal formée
 
+## Festivals
+
+### index
+
+**Description :**
+Récupère tous les festivals
+
+**Route :** `GET /festivals`
+
+**Body :**
+- `Authorization` : token d'authentification de l'utilisateur
+
+**Réponse :**
+```json
+{
+  "id": "305440a7-6516-48a6-8582-6074e9e499bd",
+  "start_date": "2024-01-27T00:00:00.000+01:00",
+  "end_date": "2024-01-28T00:00:00.000+01:00",
+  "address": "Esplanade Charles de Gaules",
+  "description": "Ce merveilleux festival revient avec pleins de nouveautés",
+  "created_at": "2024-01-27T18:51:00.874+01:00",
+  "updated_at": "2024-01-27T18:51:00.875+01:00"
+}
+```
+
+### store
+
+**Description :**
+Crée un festival
+
+**Route :** `POST /festivals/`
+
+**Body :**
+- `Authorization` : token d'authentification de l'utilisateur
+- `title` : le titre du festival
+- `start_date` : la date du début du festival
+- `end_date` : la date de fin du festival
+- `address` : l'adresse du festival
+- `description` : la description du festival
+
+**Réponse :**
+Soit :
+- `200` : si le festival a été crée
+- `401 Unauthorized` : si l'utilisateur n'est pas connecté
+- `403 Forbidden` : si l'utilisateur connecté n'a pas les accès requis pour faire cette action
+- `422 Unprocessable Entity` : si l'utilisateur oublie un champs
+
+### show
+
+**Description :**
+Récupère un festival en fonction de son id
+
+**Route :** `GET /festivals/:id`
+
+**Body :**
+- `Authorization` : token d'authentification de l'utilisateur
+
+**Réponse :**
+Soit :
+- `200` : si le festival existe
+```json
+{
+  "id": "305440a7-6516-48a6-8582-6074e9e499bd",
+  "start_date": "2024-01-27T00:00:00.000+01:00",
+  "end_date": "2024-01-28T00:00:00.000+01:00",
+  "address": "Esplanade Charles de Gaules",
+  "description": "Ce merveilleux festival revient avec pleins de nouveautés",
+  "created_at": "2024-01-27T18:51:00.874+01:00",
+  "updated_at": "2024-01-27T18:51:00.875+01:00"
+}
+```
+- `401 Unauthorized` : si l'utilisateur n'est pas connecté
+- `404 Not Found` : la donnée demandée n'existe pas
+- `422 Unprocessable Entity` : si l'utilisateur oublie un champs
+
+### update
+
+**Description :**
+Mise à jour d'un festival
+
+**Route :** `PUT /festivals/:id`
+
+**Body :**
+- `Authorization` : token d'authentification de l'utilisateur
+- `title` : le titre du festival
+- `start_date` : la date du début du festival
+- `end_date` : la date de fin du festival
+- `address` : l'adresse du festival
+- `description` : la description du festival
+
+**Réponse :**
+Soit :
+- `200` : si le festival a été mis à jour
+- `401 Unauthorized` : si l'utilisateur n'est pas connecté
+- `403 Forbidden` : si l'utilisateur connecté n'a pas les accès requis pour faire cette action
+- `404 Not Found` : la donnée demandée n'existe pas
+- `422 Unprocessable Entity` : si l'utilisateur oublie un champs
+
+### destroy
+
+**Description :**
+Mise à jour d'un festival
+
+**Route :** `DELETE /festivals/:id`
+
+**Body :**
+- `Authorization` : token d'authentification de l'utilisateur
+
+**Réponse :**
+Soit :
+- `200` : si le festival a été supprimé
+- `401 Unauthorized` : si l'utilisateur n'est pas connecté
+- `403 Forbidden` : si l'utilisateur connecté n'a pas les accès requis pour faire cette action
+- `404 Not Found` : la donnée demandée n'existe pas
+- `422 Unprocessable Entity` : si l'utilisateur oublie un champs
