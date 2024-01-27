@@ -13,7 +13,7 @@ export default class AuthController {
       isPresent: false,
     }
     
-    const res = await Volunteer.create(modifiedPayload)
+    const res = await Volunteer.create(modifiedPayload) // TODO : error Types of property 'address' are incompatible. Type 'string | null | undefined' is not assignable to type 'string | undefined'. Type 'null' is not assignable to type 'string | undefined'
 
     if (!res.$isPersisted) {
       return response.badRequest('Failed to create volunteer')
@@ -38,5 +38,18 @@ export default class AuthController {
   public async logout({ auth }: HttpContextContract) {
     await auth.use('api').revoke()
     return { revoked: true }
+  }
+
+  public async getHashSeed({ auth, request, response }: HttpContextContract) {
+    // get from .env
+    const hashSeed = process.env.HASH_SEED
+    
+    // Return hash seed if it exists
+    if (hashSeed) {
+      return response.ok({"hashSeed": hashSeed})
+    }
+
+    // return 500 if hash seed does not exist
+    return response.internalServerError('Hash seed does not exist')
   }
 }

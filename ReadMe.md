@@ -73,26 +73,29 @@ Quelques spécificités de la syntaxe des tests :
 
 **Route :** `POST /auth/register`
 
-**Paramètres :**
+**Body :**
 - `firstname` : prénom de l'utilisateur
 - `lastname` : nom de l'utilisateur
 - `email` : email de l'utilisateur
 - `tshirt_size` : taille du t-shirt de l'utilisateur (XS, S, M, L, XL, XXL, XXXL)
-- `nb_edition_perfomed` : nombre d'éditions auxquelles l'utilisateur a participé
+- `nb_edition_performed` : nombre d'éditions auxquelles l'utilisateur a participé
 - `lodging` : type de logement de l'utilisateur (proposition, recherche, aucun)
 - `address` : adresse de l'utilisateur (peut être vide)
 - `phone_number` : numéro de téléphone de l'utilisateur (peut être vide)
 - `avatar_url` : url de l'avatar de l'utilisateur (peut être vide)
 - `food_regime` : régime alimentaire de l'utilisateur (vegetarien, carnivore, autre)
-- `is_admin` : si l'utilisateur est administrateur ou non // TODO : est-ce que c'est dans le register que ça doit se faire ?
-- `is_present` : si l'utilisateur est présent ou non // TODO : est-ce que c'est utile de le mettre durant le register ?
 - `password` : mot de passe de l'utilisateur
+
+**Réponse :**
+Soit :
+- `201` : si l'utilisateur a été créé
+- `400` : si la requête est mal formée
 
 ### Login
 
 **Route :** `POST /auth/login`
 
-**Paramètres :**
+**Body :**
 - `email` : email de l'utilisateur
 - `password` : mot de passe de l'utilisateur
 
@@ -103,3 +106,25 @@ Soit :
 
 
 ### Logout
+
+**Route :** `POST /auth/logout`
+
+**Body :**
+- `Authorization` : token d'authentification de l'utilisateur
+
+**Réponse :**
+`{ revoked: true }`
+
+### get hash seed
+
+**Description :** 
+Récupère le hash seed afin que l'utilisateur puisse hasher son mot de passe en local
+
+**Route :** `GET /auth/hash-seed`
+
+**Réponse :**
+```json
+{
+    "hashSeed": "seed"
+}
+```
