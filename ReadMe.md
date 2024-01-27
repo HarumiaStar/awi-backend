@@ -76,12 +76,13 @@ Quelques spécificités de la syntaxe des tests :
 **Body :**
 - `firstname` : prénom de l'utilisateur
 - `lastname` : nom de l'utilisateur
+- `username` : nom d'utilisateur de l'utilisateur (optionnel)
 - `email` : email de l'utilisateur
 - `tshirt_size` : taille du t-shirt de l'utilisateur (XS, S, M, L, XL, XXL, XXXL)
 - `nb_edition_performed` : nombre d'éditions auxquelles l'utilisateur a participé
 - `lodging` : type de logement de l'utilisateur (proposition, recherche, aucun)
 - `address` : adresse de l'utilisateur (peut être vide)
-- `phone_number` : numéro de téléphone de l'utilisateur (peut être vide)
+- `phone` : numéro de téléphone de l'utilisateur (peut être vide)
 - `avatar_url` : url de l'avatar de l'utilisateur (peut être vide)
 - `food_regime` : régime alimentaire de l'utilisateur (vegetarien, carnivore, autre)
 - `password` : mot de passe de l'utilisateur
