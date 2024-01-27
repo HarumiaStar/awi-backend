@@ -100,10 +100,16 @@ Soit :
 - `password` : mot de passe de l'utilisateur
 
 **Réponse :**
-Soit :
-- `token` : token d'authentification de l'utilisateur
 - `401` : si l'authentification a échoué
 
+- `200` : avec le token : 
+```json
+{
+    "type": "bearer",
+    "token": "token",
+    "expires_at": "2024-01-25T15:59:03.136+01:00"
+}
+```
 
 ### Logout
 
@@ -113,7 +119,11 @@ Soit :
 - `Authorization` : token d'authentification de l'utilisateur
 
 **Réponse :**
-`{ revoked: true }`
+```json
+{ 
+    "revoked": true 
+}
+```
 
 ### get hash seed
 
@@ -131,7 +141,7 @@ Récupère le hash seed afin que l'utilisateur puisse hasher son mot de passe en
 
 ## Volunteers
 
-### Self
+### get Self
 
 **Description :**
 Récupère les informations de l'utilisateur connecté
@@ -151,7 +161,7 @@ Récupère les informations de l'utilisateur connecté
     "address": "1 rue de la paix",
     "phone": "0123456789",
     "username": "jdoe",
-    "avatarUrl": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.istockphoto.com%2Fvector%2Fdefault-avatar-profile-icon-grey-photo-placeholder-gm538753246-57866905&psig=AOvVaw0ZQZ6Z4Z3Z4Z3Z4Z3Z4Z3Z4&ust=1618306490000000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCJjQ8ZqM9u8CFQAAAAAdAAAAABAD",
+    "avatarUrl": "lien",
     "nbEditionPerformed": 2,
     "tshirtSize": "M",
     "lodging": "proposition",
@@ -159,3 +169,35 @@ Récupère les informations de l'utilisateur connecté
     "isAdmin": false
 }
 ```
+
+### update Self
+
+**Description :**
+Met à jour les informations de l'utilisateur connecté
+
+**Route :** `PUT /volunteers/me`
+
+**Body :**
+- `Authorization` : token d'authentification de l'utilisateur
+- Partial de : 
+```json
+{
+    "firstname": "John",
+    "lastname": "Doe",
+    "email": "jhondoe@gmail.com",
+    "address": "1 rue de la paix",
+    "phone": "0123456789",
+    "username": "jdoe",
+    "avatarUrl": "lien",
+    "nbEditionPerformed": 2,
+    "tshirtSize": "M",
+    "lodging": "proposition",
+    "foodRegime": "vegetarien",
+}
+```
+
+**Réponse :**
+Soit :
+- `200` : si l'utilisateur a été mis à jour
+- `400` : si la requête est mal formée
+

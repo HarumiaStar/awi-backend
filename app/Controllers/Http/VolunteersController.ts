@@ -3,7 +3,7 @@ import Volunteer from 'App/Models/Volunteer'
 import UpdateVolunteerValidator from 'App/Validators/UpdateVolunteerValidator'
 
 export default class VolunteersController {
-  public async index({}: HttpContextContract) {
+  public async index({ }: HttpContextContract) {
     return Volunteer.all()
   }
 
@@ -16,7 +16,13 @@ export default class VolunteersController {
       const payload = await request.validate(UpdateVolunteerValidator)
       const volunteer = await Volunteer.findOrFail(request.params().id)
 
-      await volunteer.merge(payload).save()
+      await volunteer.merge(payload).save() // TODO : check the following issue: 
+      /**
+       * rgument of type '{ firstname: string | undefined; lastname: string | undefined; email: string | undefined; tshirt_size: TshirtSizeEnum | undefined; nb_edition_performed: bigint | undefined; ... 8 more ...; password: string | undefined; }' is not assignable to parameter of type 'Partial<{ id: string; firstname: string; lastname: string; email: string; lodging: LodgingEnum; address: string; phone: string; username: string; password: string; avatarUrl: string; nbEditionPerformed: bigint; ... 6 more ...; updatedAt: DateTime<...>; }>'.
+          Types of property 'address' are incompatible.
+            Type 'string | null | undefined' is not assignable to type 'string | undefined'.
+              Type 'null' is not assignable to type 'string | undefined'.
+       */
       return response.status(200).json({ message: 'Volunteer updated !' })
     } catch (error) {
       return response.badRequest(error.messages)
@@ -28,7 +34,7 @@ export default class VolunteersController {
     await volunteer.delete()
   }
 
-  public async showSelf({ auth, response}: HttpContextContract) {
+  public async showSelf({ auth, response }: HttpContextContract) {
 
     const volunteer = await auth.use('api').authenticate()
 
@@ -49,4 +55,20 @@ export default class VolunteersController {
 
     return response.ok(result)
   }
- }
+
+  public async updateSelf({ request, response, auth }: HttpContextContract) {
+    const volunteer = await auth.use('api').authenticate()
+
+    const id = volunteer.id
+
+    try {
+      const payload = await request.validate(UpdateVolunteerValidator)
+
+      await volunteer.merge(payload).save()
+
+      return response.status(200).json({ message: 'Volunteer updated !' })
+    } catch (error) {
+      return response.badRequest(error.messages)
+    }
+  }
+}
