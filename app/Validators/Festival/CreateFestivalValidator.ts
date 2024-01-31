@@ -41,6 +41,13 @@ export default class CreateFestivalValidator {
       rules.maxLength(255),
     ]),
     description: schema.string([
+      rules.required(),
+      rules.trim(),
+      rules.escape(),
+      rules.minLength(10),
+      rules.maxLength(255),
+    ]),
+    poster_path: schema.string.optional([
       rules.trim(),
       rules.escape(),
       rules.minLength(10),

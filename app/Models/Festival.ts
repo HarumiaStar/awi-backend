@@ -20,6 +20,9 @@ export default class Festival extends BaseModel {
   @column()
   public description: string
 
+  @column()
+  public posterPath: string
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

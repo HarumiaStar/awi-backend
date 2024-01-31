@@ -32,15 +32,20 @@ export default class UpdateFestivalValidator {
       rules.maxLength(255),
     ]),
     start_date: schema.date.optional({ format: 'dd/MM/yyyy' }, [rules.required()]),
-    end_date: schema.date({ format: 'dd/MM/yyyy' }, [rules.required()]),
-    address: schema.string([
-      rules.required(),
+    end_date: schema.date.optional({ format: 'dd/MM/yyyy' }, [rules.required()]),
+    address: schema.string.optional([
       rules.trim(),
       rules.escape(),
       rules.minLength(10),
       rules.maxLength(255),
     ]),
     description: schema.string.optional([
+      rules.trim(),
+      rules.escape(),
+      rules.minLength(10),
+      rules.maxLength(255),
+    ]),
+    poster_path: schema.string.optional([
       rules.trim(),
       rules.escape(),
       rules.minLength(10),

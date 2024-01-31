@@ -16,29 +16,21 @@ export default class FestivalsController {
 
   public async show({ request, response }: HttpContextContract) {
     const festival: Festival = await Festival.findOrFail(request.params().id)
-    const startDate: string =
-      festival.startDate.getDay() +
-      '/' +
-      festival.startDate.getMonth() +
-      '/' +
-      festival.startDate.getFullYear()
 
-    const endDate: string =
-      festival.endDate.getDay() +
-      '/' +
-      festival.endDate.getMonth() +
-      '/' +
-      festival.endDate.getFullYear()
+    const startDate: string = this.getFestivalDateFormat(festival, 'startDate')
+    const endDate: string = this.getFestivalDateFormat(festival, 'endDate')
 
     const data = {
+      id: festival.id,
       title: festival.title,
       address: festival.address,
       description: festival.description,
+      posterPath: festival.posterPath,
       startDate: startDate,
       endDate: endDate,
     }
 
-    return response.status(200).json(data)
+    return response.ok(data)
   }
 
   public async update({ request, response }: HttpContextContract) {
@@ -62,10 +54,84 @@ export default class FestivalsController {
   }
 
   public async showCurrent({ response }: HttpContextContract) {
-    // TODO : Show the last / current Festival
+    console.log('on rentre ici')
+    let festival = await this.getCurrentDuringFestival()
+    console.log(festival)
+    if (!festival) festival = await this.getNextCurrentFestival()
+    if (!festival) return response.notFound({ message: 'Current festival not found !' })
+    console.log(festival)
+
+    const startDate: string = this.getFestivalDateFormat(festival, 'startDate')
+    const endDate: string = this.getFestivalDateFormat(festival, 'endDate')
+
+    const data = {
+      id: festival.id,
+      title: festival.title,
+      address: festival.address,
+      description: festival.description,
+      posterPath: festival.posterPath,
+      startDate: startDate,
+      endDate: endDate,
+    }
+    return response.ok(data)
   }
 
   public async updateCurrent({ request, response }: HttpContextContract) {
-    // TODO : Update the last / current Festival
+    try {
+      const payload = await request.validate(UpdateFestivalValidator)
+      let festival = await this.getCurrentDuringFestival()
+      if (!festival) festival = await this.getNextCurrentFestival()
+      if (!festival) return response.notFound({ message: 'Current festival not found for update !' })
+
+      await festival.merge(payload).save()
+
+      return response.status(200).json({ message: 'Current festival updated !' })
+    } catch (e) {
+      return response.badRequest(e.messages)
+    }
+  }
+
+  private async getCurrentDuringFestival() {
+    const currentDate = new Date()
+    const festival = await Festival.query()
+      .where('start_date', '<=', currentDate)
+      .andWhere('end_date', '>=', currentDate)
+      .first()
+    return festival
+  }
+
+  private async getNextCurrentFestival() {
+    const currentDate = new Date()
+    const festival = await Festival.query()
+      .where('start_date', '>=', currentDate)
+      .andWhere('end_date', '>=', currentDate)
+      .first()
+    return festival
+  }
+
+  private getFestivalDateFormat(festival: Festival, typeOfDate: string) {
+    switch (typeOfDate) {
+      case 'startDate': {
+        return (
+          festival.startDate.getDate().toString().padStart(2, '0') +
+          '/' +
+          (festival.startDate.getMonth() + 1).toString().padStart(2, '0') +
+          '/' +
+          festival.startDate.getFullYear()
+        )
+      }
+      case 'endDate': {
+        return (
+          festival.endDate.getDate().toString().padStart(2, '0') +
+          '/' +
+          (festival.endDate.getMonth() + 1).toString().padStart(2, '0') +
+          '/' +
+          festival.endDate.getFullYear()
+        )
+      }
+      default: {
+        return ''
+      }
+    }
   }
 }
