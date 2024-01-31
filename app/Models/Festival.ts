@@ -6,6 +6,9 @@ export default class Festival extends BaseModel {
   public id: string
 
   @column()
+  public title: string
+
+  @column()
   public startDate: Date
 
   @column()
@@ -16,6 +19,9 @@ export default class Festival extends BaseModel {
 
   @column()
   public description: string
+
+  @column()
+  public posterPath: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

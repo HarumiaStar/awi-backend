@@ -34,6 +34,19 @@ Route.group(() => {
   Route.get('/volunteers/:id', 'VolunteersController.show')
   Route.put('/volunteers/:id', 'VolunteersController.update')
   Route.delete('/volunteers/:id', 'VolunteersController.destroy')
+
+  // Festival
+  Route.group(() => {
+    // The current festival
+    Route.get('/current', 'FestivalsController.showCurrent')
+    Route.put('/current', 'FestivalsController.updateCurrent').middleware('role:admin')
+
+    Route.get('/', 'FestivalsController.index')
+    Route.post('/', 'FestivalsController.store').middleware('role:admin')
+    Route.get('/:id', 'FestivalsController.show')
+    Route.put('/:id', 'FestivalsController.update').middleware('role:admin')
+    Route.delete('/:id', 'FestivalsController.destroy').middleware('role:admin')
+  }).prefix('/festivals')
 }).prefix('/api')
 
 Route.get('/', () => {
