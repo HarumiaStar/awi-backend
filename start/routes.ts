@@ -41,6 +41,8 @@ Route.group(() => {
     Route.get('/current', 'FestivalsController.showCurrent')
     Route.put('/current', 'FestivalsController.updateCurrent').middleware('role:admin')
 
+    Route.post('/new', 'FestivalsController.new').middleware('role:admin')
+
     Route.get('/', 'FestivalsController.index')
     Route.post('/', 'FestivalsController.store').middleware('role:admin')
     Route.get('/:id', 'FestivalsController.show')
