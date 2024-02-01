@@ -134,4 +134,21 @@ export default class FestivalsController {
       }
     }
   }
+
+  public async new({ request, response }: HttpContextContract) {
+    // const payload = await request.validate(CreateFestivalValidator)
+    // const festival = await Festival.create(payload)
+
+
+
+
+
+
+
+
+
+
+    
+    return response.badRequest("Not implemented yet")
+  }
 }

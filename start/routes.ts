@@ -49,6 +49,16 @@ Route.group(() => {
     Route.put('/:id', 'FestivalsController.update').middleware('role:admin')
     Route.delete('/:id', 'FestivalsController.destroy').middleware('role:admin')
   }).prefix('/festivals')
+
+  // Game
+  Route.group(() => {
+    Route.get('/', 'GamesController.index')
+    Route.post('/', 'GamesController.store').middleware('role:admin')
+    Route.post('/multiple', 'GamesController.storeMultiple').middleware('role:admin')
+    Route.get('/:id', 'GamesController.show')
+    Route.put('/:id', 'GamesController.update').middleware('role:admin')
+    Route.delete('/:id', 'GamesController.destroy').middleware('role:admin')
+  }).prefix('/games')
 }).prefix('/api')
 
 Route.get('/', () => {
