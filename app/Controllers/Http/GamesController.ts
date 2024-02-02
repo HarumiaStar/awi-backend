@@ -6,7 +6,33 @@ import UpdateGameValidator from 'App/Validators/Game/UpdateGameValidator'
 
 export default class gamesController {
   public async index({}: HttpContextContract) {
-    return Game.all()
+    const games = await Game.all()
+
+    const data = games.map((game) => {
+        return {
+            id: game.id,
+            name: game.name,
+            author: game.author,
+            editor: game.editor,
+            maxPlayers: game.maxPlayers,
+            minPlayers: game.minPlayers,
+            minAge: game.minAge,
+            duration: game.duration,
+            toAnimate: game.toAnimate,
+            recieved: game.recieved,
+            type: game.type,
+            mechanics: game.mechanics,
+            theme: game.theme,
+            tags: game.tags,
+            description: game.description,
+            image: game.image,
+            logo: game.logo,
+            video: game.video,
+            manual: game.manual,
+        }
+    });
+
+    return data
   }
 
     public async store({request, response}: HttpContextContract) {

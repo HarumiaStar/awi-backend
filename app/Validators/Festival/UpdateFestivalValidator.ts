@@ -25,14 +25,13 @@ export default class UpdateFestivalValidator {
    */
   public schema = schema.create({
     title: schema.string.optional([
-      rules.required(),
       rules.trim(),
       rules.escape(),
       rules.minLength(10),
       rules.maxLength(255),
     ]),
-    start_date: schema.date.optional({ format: 'dd/MM/yyyy' }, [rules.required()]),
-    end_date: schema.date.optional({ format: 'dd/MM/yyyy' }, [rules.required()]),
+    start_date: schema.date.optional({ format: 'dd/MM/yyyy' }, []),
+    end_date: schema.date.optional({ format: 'dd/MM/yyyy' }, []),
     address: schema.string.optional([
       rules.trim(),
       rules.escape(),
