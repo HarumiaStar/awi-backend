@@ -7,6 +7,10 @@ export default class CreateMultipleZoneValidator {
     public schema = schema.create({
         zones: schema.array().members(
             schema.object().members({
+                idZone: schema.number([
+                    rules.required(),
+                    rules.range(1, 100000),
+                ]),
                 name: schema.string([
                     rules.required(),
                     rules.trim(),

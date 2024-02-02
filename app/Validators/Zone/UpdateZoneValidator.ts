@@ -5,6 +5,9 @@ export default class UpdateZoneValidator {
     constructor(protected ctx: HttpContextContract) { }
 
     public schema = schema.create({
+        idZone: schema.number.optional([
+            rules.range(1, 100000),
+        ]),
         name: schema.string.optional([
             // rules.required(),
             rules.trim(),

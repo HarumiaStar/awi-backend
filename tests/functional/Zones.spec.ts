@@ -90,6 +90,7 @@ class Connection {
 
 test.group('Test des fonction internes : Zone', (group) => {
     const zoneData = {
+        idZone: 1,
         name : 'TestZone',
         description: 'TestDescription',
         maxCapacity: 100,
@@ -155,6 +156,7 @@ test.group('Test des fonction internes : Zone', (group) => {
 
 test.group('Test des routes : Zone', (group) => {
     const zoneData = {
+        idZone: 1,
         name : 'TestZone',
         description: 'TestDescription',
         maxCapacity: 100,
@@ -254,7 +256,7 @@ test.group('Test des routes : Zone', (group) => {
 
     test('get all zones', async ({ client, assert }) => {
         // Create a second zone
-        const zoneData2 = { ...zoneData, name: 'TestZone2' }
+        const zoneData2 = { ...zoneData, name: 'TestZone2' , idZone: 2}
 
         const response2 = await client.post('/api/zones').json(zoneData2).header('Authorization', `Bearer ${connection.token}`)
 
@@ -315,6 +317,7 @@ test.group('Test des routes : Zone', (group) => {
 
     test('create new zone without a name', async ({ client }) => {
         const zoneData2 = {
+            idZone: 3,
             description: 'TestDescription',
             maxCapacity: 100,
             animation: true,
@@ -328,6 +331,7 @@ test.group('Test des routes : Zone', (group) => {
 
     test('create new zone without optional fields', async ({ client, assert }) => {
         const zoneData3 = {
+            idZone: 3,
             name : 'TestZone3',
             description: 'TestDescription',
             maxCapacity: 100,
@@ -347,6 +351,7 @@ test.group('Test des routes : Zone', (group) => {
     test('create multiple zones', async ({ client, assert }) => {
         const zonesData = [
             {
+                idZone: 4,
                 name : 'TestZone4',
                 description: 'TestDescription',
                 maxCapacity: 100,
@@ -354,6 +359,7 @@ test.group('Test des routes : Zone', (group) => {
                 festivalId: zoneData.festivalId,
             },
             {
+                idZone: 5,
                 name : 'TestZone5',
                 description: 'TestDescription',
                 maxCapacity: 100,

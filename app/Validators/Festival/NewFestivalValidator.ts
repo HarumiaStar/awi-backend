@@ -1,7 +1,7 @@
 import { schema, CustomMessages, rules } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
-export default class CreateFestivalValidator {
+export default class NewFestivalValidator {
     constructor(protected ctx: HttpContextContract) { }
 
     /*
@@ -53,8 +53,12 @@ export default class CreateFestivalValidator {
             rules.minLength(10),
             rules.maxLength(255),
         ]),
-        jeux: schema.array().members(
+        games: schema.array().members(
             schema.object().members({
+                idGame: schema.number([
+                    rules.required(),
+                    
+                ]),
                 name: schema.string([
                     rules.required(),
                     rules.trim(),
@@ -144,6 +148,53 @@ export default class CreateFestivalValidator {
                     rules.escape(),
                     rules.minLength(3),
                     rules.maxLength(255),
+                ]),
+            })
+        ),
+        zones: schema.array().members(
+            schema.object().members({
+                idZone: schema.number([
+                    rules.required(),
+                ]),
+                name: schema.string([
+                    rules.required(),
+                    rules.trim(),
+                    rules.escape(),
+                    rules.minLength(3),
+                    rules.maxLength(255),
+                ]),
+                description: schema.string.optional([
+                    rules.trim(),
+                    rules.escape(),
+                    rules.minLength(3),
+                    rules.maxLength(255),
+                ]),
+                maxCapacity: schema.number([
+                    rules.required(),
+                    rules.range(1, 1000),
+                ]),
+                animation: schema.boolean([
+                    rules.required(),
+                ]),
+            })
+        ),
+        slots: schema.array().members(
+            schema.object().members({
+                startTime: schema.date({ format: 'dd/MM/yyyy HH:mm' }, [
+                    rules.required(),
+                ]),
+                endTime: schema.date({ format: 'dd/MM/yyyy HH:mm' }, [
+                    rules.required(),
+                ]),
+            })
+        ),
+        gameZones: schema.array().members(
+            schema.object().members({
+                idZone: schema.number([
+                    rules.required(),
+                ]),
+                idJeu: schema.number([
+                    rules.required(),
                 ]),
             })
         ),

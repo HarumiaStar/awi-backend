@@ -6,6 +6,9 @@ export default class UpdateGameValidator {
     constructor(protected ctx: HttpContextContract) { }
 
     public schema = schema.create({
+        idGame: schema.number.optional([
+            rules.range(1, 100000),
+        ]),
         name: schema.string.optional([
             rules.trim(),
             rules.escape(),

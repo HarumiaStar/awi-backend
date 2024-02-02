@@ -9,6 +9,9 @@ export default class Zone extends BaseModel {
   public id: string
 
   @column()
+  public idZone: number
+
+  @column()
   public name: string
 
   @column()

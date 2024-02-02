@@ -4,14 +4,16 @@ import Game from './Game'
 import Zone from './Zone'
 
 export default class GameZone extends BaseModel {
-
   @column()
+  public id: number
+
+  @column({ isPrimary: true })
   public gameId: string
 
   @belongsTo(() => Game)
   public game: BelongsTo<typeof Game>
 
-  @column()
+  @column({ isPrimary: true })
   public zoneId: string
 
   @belongsTo(() => Zone)

@@ -8,6 +8,7 @@ export default class extends BaseSchema {
       table.string('id').primary()
       
       // Basics
+      table.integer('id_game').notNullable().unique()
       table.string('name').notNullable()
       table.string('author').nullable()
       table.string('editor').notNullable()

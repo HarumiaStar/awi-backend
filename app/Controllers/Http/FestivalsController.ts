@@ -1,10 +1,16 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Festival from 'App/Models/Festival'
+import Game from 'App/Models/Game'
+import GameZone from 'App/Models/GameZone'
+import Slot from 'App/Models/Slot'
+import Zone from 'App/Models/Zone'
 import CreateFestivalValidator from 'App/Validators/Festival/CreateFestivalValidator'
+import NewFestivalValidator from 'App/Validators/Festival/NewFestivalValidator'
 import UpdateFestivalValidator from 'App/Validators/Festival/UpdateFestivalValidator'
+import { DateTime } from 'luxon'
 
 export default class FestivalsController {
-  public async index({}: HttpContextContract) {
+  public async index({ }: HttpContextContract) {
     return Festival.all()
   }
 
@@ -133,11 +139,94 @@ export default class FestivalsController {
   }
 
   public async new({ request, response }: HttpContextContract) {
-    
+    const payload = await request.validate(NewFestivalValidator)
+
+    const festivalData : {
+      title: string,
+      address: string,
+      description: string,
+      posterPath: string | undefined,
+      startDate: Date,
+      endDate: Date,
+    } = {
+      title: payload.title,
+      address: payload.address,
+      description: payload.description,
+      posterPath: payload.poster_path,
+      startDate: payload.start_date.toJSDate(),
+      endDate: payload.end_date.toJSDate(),
+    }
+
+    const festival = await Festival.create(festivalData)
+
+
+    const festId = festival.id;
+
+    const gamesData = payload.games.map((jeu: any) => {
+      return {
+        idGame: jeu.idGame,
+        name: jeu.name,
+        author: jeu.author,
+        editor: jeu.editor,
+        maxPlayers: jeu.maxPlayers,
+        minPlayers: jeu.minPlayers,
+        minAge: jeu.minAge,
+        duration: jeu.duration,
+        toAnimate: jeu.toAnimate,
+        recieved: jeu.recieved,
+        type: jeu.type,
+        mechanics: jeu.mechanics,
+        theme: jeu.theme,
+        tags: jeu.tags,
+        description: jeu.description,
+        image: jeu.image,
+        logo: jeu.logo,
+        video: jeu.video,
+        manual: jeu.manual,
+      }
+    })
+    const games = await Game.createMany(gamesData)
+
+    const zonesData = payload.zones.map((zone: any) => {
+      return {
+        idZone: zone.idZone,
+        name: zone.name,
+        description: zone.description,
+        maxCapacity: zone.maxCapacity,
+        animation: zone.animation,
+        festivalId: festId,
+      }
+    });
+
+    const zones = await Zone.createMany(zonesData)
+
+    const gameZonesData = payload.gameZones.map((jeu: any) => {
+      const game = games.find((game) => game.idGame === jeu.idJeu)
+      const zone = zones.find((zone) => zone.idZone === jeu.idZone)
+
+      if (!game || !zone) {
+        throw new Error('Game-zone dont exist')
+      }
+
+      return {
+        gameId: game.id,
+        zoneId: zone.id,
+      }
+    })
+
+    await GameZone.createMany(gameZonesData)
+
+    const slotsData = payload.slots.map((slot: {startTime: DateTime<boolean>;endTime: DateTime<boolean>;}) => {
+      return {
+        startTime: slot.startTime,
+        endTime: slot.endTime,
+      }
+    })
+
+    await Slot.createMany(slotsData)
 
 
 
-    
-    return response.badRequest("Not implemented yet")
+    return response.ok({ message: 'Festival created !'})
   }
 }

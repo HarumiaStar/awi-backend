@@ -15,6 +15,7 @@ export default class ZonesController {
 
         const data = {
             id: zone.id,
+            idZone: zone.idZone,
             name: zone.name,
             description: zone.description,
             maxCapacity: zone.maxCapacity,
@@ -30,6 +31,7 @@ export default class ZonesController {
 
         const data = {
             id: zone.id,
+            idZone: zone.idZone,
             name: zone.name,
             description: zone.description,
             maxCapacity: zone.maxCapacity,
@@ -69,6 +71,7 @@ export default class ZonesController {
 
         const data: {
             id: string,
+            idZone: number,
             name: string,
             description: string,
             maxCapacity: number,
@@ -78,6 +81,7 @@ export default class ZonesController {
         zones.forEach(zone => {
             data.push({
                 id: zone.id,
+                idZone: zone.idZone,
                 name: zone.name,
                 description: zone.description,
                 maxCapacity: zone.maxCapacity,

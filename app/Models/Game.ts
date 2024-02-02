@@ -7,6 +7,9 @@ export default class Game extends BaseModel {
   public id: string
 
   @column()
+  public idGame: number
+
+  @column()
   public name: string
 
   @column()

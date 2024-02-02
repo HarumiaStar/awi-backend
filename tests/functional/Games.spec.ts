@@ -84,6 +84,7 @@ class Connection {
 
 test.group('Test des fonction internes : Game', (group) => {
     const gameData = {
+        idGame: 1,
         name: 'TestName',
         author: 'TestAuthor',
         editor: 'TestEditor',
@@ -150,6 +151,7 @@ test.group('Test des fonction internes : Game', (group) => {
 
 test.group('Test des routes : Game', (group) => {
     const gameData = {
+        idGame: 1,
         name: 'TestName',
         author: 'TestAuthor',
         editor: 'TestEditor',
@@ -244,7 +246,7 @@ test.group('Test des routes : Game', (group) => {
 
     test('get all games', async ({ client, assert }) => {
         // Create a second game
-        const gameData2 = { ...gameData, name: 'TestName2' }
+        const gameData2 = { ...gameData, name: 'TestName2', idGame: 2 }
 
         const response2 = await client.post('/api/games').json(gameData2).header('Authorization', `Bearer ${connection.token}`)
 
@@ -303,6 +305,7 @@ test.group('Test des routes : Game', (group) => {
 
     test('create new game without a name', async ({ client }) => {
         const gameData = {
+            idGame: 1,
             author: 'TestAuthor',
             editor: 'TestEditor',
             maxPlayers: 10,
@@ -329,6 +332,7 @@ test.group('Test des routes : Game', (group) => {
 
     test('create new game without optional fields', async ({ client, assert }) => {
         const gameData = {
+            idGame: 3,
             name: 'TestName3',
             editor: 'TestEditor',
             maxPlayers: 10,
@@ -364,6 +368,7 @@ test.group('Test des routes : Game', (group) => {
     test('create multiple games', async ({ client, assert }) => {
         const gameData = [
             {
+                idGame: 6,
                 name: 'TestName6',
                 editor: 'TestEditor',
                 maxPlayers: 10,
@@ -380,6 +385,7 @@ test.group('Test des routes : Game', (group) => {
                 image: 'TestImage',
             },
             {
+                idGame: 5,
                 name: 'TestName5',
                 editor: 'TestEditor',
                 maxPlayers: 10,
@@ -396,6 +402,7 @@ test.group('Test des routes : Game', (group) => {
                 image: 'TestImage',
             },
             {
+                idGame: 4,
                 name: 'TestName4',
                 editor: 'TestEditor',
                 maxPlayers: 10,

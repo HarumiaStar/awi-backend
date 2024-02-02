@@ -1,8 +1,12 @@
 import Database from '@ioc:Adonis/Lucid/Database'
 import { test } from '@japa/runner'
 import Festival from 'App/Models/Festival';
+import Game from 'App/Models/Game';
+import GameZone from 'App/Models/GameZone';
+import Slot from 'App/Models/Slot';
 
 import Volunteer, { FoodRegimeEnum, LodgingEnum, TshirtSizeEnum } from 'App/Models/Volunteer';
+import Zone from 'App/Models/Zone';
 import { HmacSHA256 } from 'crypto-js';
 
 function encryptWithHashSeed(data: string): string {
@@ -311,6 +315,213 @@ test.group('Test des routes : Festival', (group) => {
         const festival = await Festival.findByOrFail('title', 'TestFestival3')
 
         assert.equal(festival.title, 'TestFestival3')
+    });
+
+
+})
+
+test.group('Test de la création d\'un festival : New', (group) => {
+    const festivalData = {
+        title: 'TestFestival',
+        start_date: '13/01/2021',
+        end_date: '14/01/2021',
+        description: 'TestDescription',
+        address: 'TestAddress',
+        poster_path: 'TestPosterPath',
+    }
+
+    const gamesData = [
+        {
+            idGame: 1,
+            name: 'TestGame',
+            author: 'TestAuthor',
+            editor: 'TestEditor',
+            description: 'TestDescription',
+            minPlayer: 2,
+            maxPlayer: 4,
+            minAge: 8,
+            duration: 30,
+            toAnimate: true,
+            recieved: true,
+            type: 'TestType',
+            mechanics: 'TestMechanics',
+            theme: 'TestTheme',
+            tags: 'TestTags',
+            image: 'TestImage',
+            logo: 'TestLogo',
+            video: 'TestVideo',
+            manual: 'TestManual',
+        },
+        {
+            idGame: 2,
+            name: 'TestGame2',
+            author: 'TestAuthor',
+            editor: 'TestEditor',
+            description: 'TestDescription2',
+            minPlayer: 2,
+            maxPlayer: 4,
+            minAge: 8,
+            duration: 30,
+            toAnimate: true,
+            recieved: true,
+            type: 'TestType2',
+            mechanics: 'TestMechanics2',
+            theme: 'TestTheme2',
+            tags: 'TestTags2',
+            image: 'TestImage2',
+            logo: 'TestLogo2',
+            video: 'TestVideo2',
+            manual: 'TestManual2',
+        },
+        {
+            idGame: 3,
+            name: 'TestGame3',
+            author: 'TestAuthor',
+            editor: 'TestEditor',
+            description: 'TestDescription3',
+            minPlayer: 2,
+            maxPlayer: 4,
+            minAge: 8,
+            duration: 30,
+            toAnimate: true,
+            recieved: true,
+            type: 'TestType3',
+            mechanics: 'TestMechanics3',
+            theme: 'TestTheme3',
+            tags: 'TestTags3',
+            image: 'TestImage3',
+            logo: 'TestLogo3',
+            video: 'TestVideo3',
+            manual: 'TestManual3',
+        },
+    ]
+
+    const zonesData = [
+        {
+            idZone: 1,
+            name: 'TestZone',
+            description: 'TestDescription',
+            animation: true,
+            maxCapacity: 10,
+        },
+        {
+            idZone: 2,
+            name: 'TestZone2',
+            description: 'TestDescription2',
+            maxCapacity: 2,
+            animation: false,
+        },
+        {
+            idZone: 3,
+            name: 'TestZone3',
+            description: 'TestDescription3',
+            maxCapacity: 5,
+            animation: true,
+        },
+    ]
+
+    const slotsData = [
+        {
+            idSlot: 1,
+            startTime: '13/01/2021 10:00',
+            endTime: '13/01/2021 12:00',
+        },
+        {
+            idSlot: 2,
+            startTime: '13/01/2021 14:00',
+            endTime: '13/01/2021 16:00',
+        },
+        {
+            idSlot: 3,
+            startTime: '14/01/2021 18:00',
+            endTime: '14/01/2021 20:00',
+        },
+    ]
+
+    const gameZonesData = [
+        {
+            idJeu: 1,
+            idZone: 1,
+        },
+        {
+            idJeu: 1,
+            idZone: 2,
+        },
+        {
+            idJeu: 2,
+            idZone: 3,
+        },
+        {
+            idJeu: 3,
+            idZone: 1,
+        },
+
+    ]
+
+    const newFestivalData = {
+        ...festivalData,
+        games: gamesData,
+        zones: zonesData,
+        slots: slotsData,
+        gameZones: gameZonesData,
+    }
+
+    const connection = new Connection()
+
+    group.setup(async () => {
+        await Database.beginGlobalTransaction()
+    });
+
+    group.teardown(async () => {
+        await Database.rollbackGlobalTransaction()
+    });
+
+    test('Register', async ({ client, assert }) => {
+        await connection.registerAndAdmin(client)
+        await connection.login(client)
+
+        const volunteer = await Volunteer.findByOrFail('username', connection.username)
+
+        assert.isTrue(volunteer.isAdmin)
+    })
+
+    test('create new festival', async ({ client, assert }) => {
+        const response = await client.post('/api/festivals/new').json(newFestivalData).header('Authorization', `Bearer ${connection.token}`)
+
+        if (response.status() !== 200) {
+            console.log(response.error());
+            console.log(response.text());
+        }
+
+        response.assertStatus(200)
+        assert.equal(response.body().message, 'Festival created !');
+    });
+
+    test('Check if festival is created', async ({ assert }) => {
+        const festival = await Festival.findByOrFail('title', 'TestFestival')
+
+        assert.equal(festival.title, 'TestFestival')
+    });
+
+    test('Check if games are created', async ({ assert }) => {
+        const games = await Game.all()
+
+        assert.equal(games.length, 3)
+    });
+
+    test('Check if zones are created', async ({ assert }) => {
+        const zones = await Zone.all()
+        assert.equal(zones.length, 3)
+    });
+
+    test('Check if slots are created', async ({ assert }) => {
+        const slots = await Slot.all()
+        assert.equal(slots.length, 3)
+    });
+
+    test('Check if gameZones are created', async ({  assert }) => {
+        const gameZones = await GameZone.all()
+        assert.equal(gameZones.length, 4)
     });
 
 

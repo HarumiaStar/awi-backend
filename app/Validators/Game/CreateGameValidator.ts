@@ -24,6 +24,10 @@ export default class CreateGameValidator {
      *    ```
      */
     public schema = schema.create({
+        idGame: schema.number([
+            rules.required(),
+            rules.range(1, 100000),
+        ]),
         name: schema.string([
             rules.required(),
             rules.trim(),

@@ -11,6 +11,7 @@ export default class gamesController {
     const data = games.map((game) => {
         return {
             id: game.id,
+            idGame: game.idGame,
             name: game.name,
             author: game.author,
             editor: game.editor,
@@ -41,6 +42,7 @@ export default class gamesController {
         
         const data = {
             id: game.id,
+            idGame: game.idGame,
             name: game.name,
             author: game.author,
             editor: game.editor,
@@ -69,6 +71,7 @@ export default class gamesController {
 
         const data = {
             id: game.id,
+            idGame: game.idGame,
             name: game.name,
             author: game.author,
             editor: game.editor,
@@ -118,7 +121,32 @@ export default class gamesController {
 
         const games = await Game.createMany(payload)
 
-        return response.ok(games)
+        const data = games.map((game) => {
+            return {
+                id: game.id,
+                idGame: game.idGame,
+                name: game.name,
+                author: game.author,
+                editor: game.editor,
+                maxPlayers: game.maxPlayers,
+                minPlayers: game.minPlayers,
+                minAge: game.minAge,
+                duration: game.duration,
+                toAnimate: game.toAnimate,
+                recieved: game.recieved,
+                type: game.type,
+                mechanics: game.mechanics,
+                theme: game.theme,
+                tags: game.tags,
+                description: game.description,
+                image: game.image,
+                logo: game.logo,
+                video: game.video,
+                manual: game.manual,
+            }
+        });
+
+        return response.ok(data)
     }
 }
 
