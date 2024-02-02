@@ -123,7 +123,7 @@ test.group('Test des fonction internes : Zone', (group) => {
     })
 
     test('create new zone', async ({ assert }) => {
-        const zone = await Zone.create(zoneData)
+        await Zone.create(zoneData)
 
         const savedZone = await Zone.findByOrFail('name', 'TestZone')
 

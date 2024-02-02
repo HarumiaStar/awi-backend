@@ -70,6 +70,16 @@ Route.group(() => {
     Route.put('/:id', 'ZonesController.update').middleware('role:admin')
     Route.delete('/:id', 'ZonesController.destroy').middleware('role:admin')
   }).prefix('/zones')
+
+  // Slot
+  Route.group(() => {
+    Route.get('/', 'SlotsController.index')
+    Route.post('/', 'SlotsController.store').middleware('role:admin')
+    Route.post('/multiple', 'SlotsController.storeMultiple').middleware('role:admin')
+    Route.get('/:id', 'SlotsController.show')
+    Route.put('/:id', 'SlotsController.update').middleware('role:admin')
+    Route.delete('/:id', 'SlotsController.destroy').middleware('role:admin')
+  }).prefix('/slots')
 }).prefix('/api')
 
 Route.get('/', () => {

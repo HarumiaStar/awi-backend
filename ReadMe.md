@@ -788,3 +788,157 @@ Soit :
 - `403 Forbidden` : si l'utilisateur connecté n'a pas les accès requis pour faire cette action **ou si l'utilisateur n'est pas admin**
 - `404 Not Found` : la donnée demandée n'existe pas
 
+## Slots
+
+### index
+
+**Description :**
+Récupère tous les créneaux
+
+**Route :** `GET /api/slots`
+
+**Body :**
+Rien
+
+**Réponse :**
+- `200` : avec la liste des créneaux : 
+```json
+[
+    {   
+        "id": "41892825-3726-464c-a5e6-12451102d89b",
+        "startTime": "27/01/2024 10:00",
+        "endTime": "27/01/2024 12:00",
+        "created_at": "2024-01-27T18:51:00.874+01:00",
+        "updated_at": "2024-01-27T18:51:00.875+01:00"
+    },
+    {
+        ...
+    }
+]
+```
+
+### store
+
+**Description :**
+Crée un créneau
+
+**Route :** `POST /api/slots/`
+
+**Body :**
+- `Authorization` : token d'authentification de l'utilisateur **et être admin**
+- `startTime` : l'heure de début du créneau
+- `endTime` : l'heure de fin du créneau
+
+ex :
+```json
+{
+    "startTime": "27/01/2024 10:00",
+    "endTime": "27/01/2024 12:00"
+}
+```
+
+**Réponse :**
+Soit :
+- `200` : si le créneau a été crée (retourne le créneau crée avec son id)
+- `401 Unauthorized` : si l'utilisateur n'est pas connecté
+- `403 Forbidden` : si l'utilisateur connecté n'a pas les accès requis pour faire cette action **ou si l'utilisateur n'est pas admin**
+- `422 Unprocessable Entity` : si l'utilisateur oublie un champs
+
+### show
+
+**Description :**
+Récupère un créneau en fonction de son id
+
+**Route :** `GET /api/slots/:id`
+
+**Body :**
+Rien
+
+**Réponse :**
+Soit :
+- `200` : si le créneau existe (avec le créneau)
+- `404` : si le créneau n'existe pas
+- `401 Unauthorized` : si l'utilisateur n'est pas connecté
+- `403 Forbidden` : si l'utilisateur connecté n'a pas les accès requis pour faire cette action **ou si l'utilisateur n'est pas admin**
+- `404 Not Found` : la donnée demandée n'existe pas
+- `422 Unprocessable Entity` : si l'utilisateur oublie un champs
+
+### update
+
+**Description :**
+Mise à jour d'un créneau
+
+**Route :** `PUT /api/slots/:id`
+
+**Body :**
+- `Authorization` : token d'authentification de l'utilisateur **et être admin**
+- `startTime` : l'heure de début du créneau (optionnel)
+- `endTime` : l'heure de fin du créneau (optionnel)
+
+ex :
+```json
+{
+    "startTime": "27/01/2024 10:00",
+}
+```
+
+**Réponse :**
+Soit :
+- `200` : si le créneau a été mis à jour (retourne le créneau mis à jour)
+- `401 Unauthorized` : si l'utilisateur n'est pas connecté
+- `403 Forbidden` : si l'utilisateur connecté n'a pas les accès requis pour faire cette action **ou si l'utilisateur n'est pas admin**
+- `404 Not Found` : la donnée demandée n'existe pas
+- `422 Unprocessable Entity` : si l'utilisateur oublie un champs
+
+### destroy
+
+**Description :**
+Supprime un créneau
+
+**Route :** `DELETE /api/slots/:id`
+
+**Body :**
+- `Authorization` : token d'authentification de l'utilisateur **et être admin**
+
+**Réponse :**
+Soit :
+- `200` : si le créneau a été supprimé
+- `401 Unauthorized` : si l'utilisateur n'est pas connecté
+- `403 Forbidden` : si l'utilisateur connecté n'a pas les accès requis pour faire cette action **ou si l'utilisateur n'est pas admin**
+- `404 Not Found` : la donnée demandée n'existe pas
+- `422 Unprocessable Entity` : si l'utilisateur oublie un champs
+
+### Create multiple slots
+
+**Description :**
+Crée plusieurs créneaux
+
+**Route :** `POST /api/slots/multiple`
+
+**Body :**
+- `Authorization` : token d'authentification de l'utilisateur **et être admin**
+- `slots` : tableau de créneaux
+
+ex :
+```json
+{
+    "slots": [
+        {
+            "startTime": "27/01/2024 10:00",
+            "endTime": "27/01/2024 12:00"
+        },
+        {
+            "startTime": "27/01/2024 14:00",
+            "endTime": "27/01/2024 16:00"
+        }
+    ]
+}   
+```
+
+**Réponse :**
+Soit :
+- `200` : si les créneaux ont été crées (retourne les créneaux crées avec leur id)
+- `401 Unauthorized` : si l'utilisateur n'est pas connecté
+- `403 Forbidden` : si l'utilisateur connecté n'a pas les accès requis pour faire cette action **ou si l'utilisateur n'est pas admin**
+- `422 Unprocessable Entity` : si l'utilisateur oublie un champs
+
