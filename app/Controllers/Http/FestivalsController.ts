@@ -54,12 +54,9 @@ export default class FestivalsController {
   }
 
   public async showCurrent({ response }: HttpContextContract) {
-    console.log('on rentre ici')
     let festival = await this.getCurrentDuringFestival()
-    console.log(festival)
     if (!festival) festival = await this.getNextCurrentFestival()
     if (!festival) return response.notFound({ message: 'Current festival not found !' })
-    console.log(festival)
 
     const startDate: string = this.getFestivalDateFormat(festival, 'startDate')
     const endDate: string = this.getFestivalDateFormat(festival, 'endDate')
@@ -136,15 +133,7 @@ export default class FestivalsController {
   }
 
   public async new({ request, response }: HttpContextContract) {
-    // const payload = await request.validate(CreateFestivalValidator)
-    // const festival = await Festival.create(payload)
-
-
-
-
-
-
-
+    
 
 
 

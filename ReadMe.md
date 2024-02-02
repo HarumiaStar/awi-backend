@@ -942,3 +942,170 @@ Soit :
 - `403 Forbidden` : si l'utilisateur connecté n'a pas les accès requis pour faire cette action **ou si l'utilisateur n'est pas admin**
 - `422 Unprocessable Entity` : si l'utilisateur oublie un champs
 
+## GameZone
+
+### index
+
+**Description :**
+Récupère toutes les associations jeu-zone
+
+**Route :** `GET /api/game-zones`
+
+**Body :**
+Rien
+
+**Réponse :**
+- `200` : avec la liste des associations jeu-zone : 
+```json
+[
+    {
+        "gameId": "41892825-3726-464c-a5e6-12451102d89b",
+        "zoneId": "41892825-3726-464c-a5e6-12451102d89b",
+    },
+    {
+        ...
+    }
+]
+```
+
+### store
+
+**Description :**
+Crée une association jeu-zone
+
+**Route :** `POST /api/game-zones/`
+
+**Body :**
+- `Authorization` : token d'authentification de l'utilisateur **et être admin**
+- `gameId` : l'id du jeu
+- `zoneId` : l'id de la zone
+
+ex :
+```json
+{
+    "gameId": "41892825-3726-464c-a5e6-12451102d89b",
+    "zoneId": "41892825-3726-464c-a5e6-12451102d89b",
+}
+```
+
+**Réponse :**
+Soit :
+- `200` : si l'association a été crée (retourne l'association crée avec son id)
+- `401 Unauthorized` : si l'utilisateur n'est pas connecté
+- `403 Forbidden` : si l'utilisateur connecté n'a pas les accès requis **ou si l'utilisateur n'est pas admin**
+- `422 Unprocessable Entity` : si l'utilisateur oublie un champs
+- `404 Not Found` : si le jeu ou la zone n'existe pas
+
+### show
+
+**Description :**
+Fonction non implémentée : inutile
+
+### update
+
+**Description :**
+Fonction non implémentée : inutile
+
+### destroy
+
+**Description :**
+Supprime une association jeu-zone
+
+**Route :** `DELETE /api/game-zones/`
+
+**Body :**
+- `Authorization` : token d'authentification de l'utilisateur **et être admin**
+- `gameId` : l'id du jeu
+- `zoneId` : l'id de la zone
+
+ex :
+```json
+{
+    "gameId": "41892825-3726-464c-a5e6-12451102d89b",
+    "zoneId": "41892825-3726-464c-a5e6-12451102d89b",
+}
+```
+
+**Réponse :**
+Soit :
+- `200` : si l'association a été supprimée
+- `401 Unauthorized` : si l'utilisateur n'est pas connecté
+- `403 Forbidden` : si l'utilisateur connecté n'a pas les accès requis **ou si l'utilisateur n'est pas admin**
+- `422 Unprocessable Entity` : si l'utilisateur oublie un champs
+- `404 Not Found` : si le jeu ou la zone n'existe pas
+
+### Create multiple game-zones
+
+**Description :**
+Crée plusieurs associations jeu-zone
+
+**Route :** `POST /api/game-zones/multiple`
+
+**Body :**
+- `Authorization` : token d'authentification de l'utilisateur **et être admin**
+- `gameZones` : tableau d'associations jeu-zone
+
+ex :
+```json
+{
+    "gameZones": [
+        {
+            "gameId": "41892825-3726-464c-a5e6-12451102d89b",
+            "zoneId": "41892825-3726-464c-a5e6-12451102d89b",
+        },
+        {
+            "gameId": "41892825-3726-464c-a5e6-12451102d89b",
+            "zoneId": "41892825-3726-464c-a5e6-12451102d89b",
+        }
+    ]
+}
+```
+
+**Réponse :**
+Soit :
+- `200` : si les associations ont été crées (retourne les associations crées avec leur id)
+- `401 Unauthorized` : si l'utilisateur n'est pas connecté
+- `403 Forbidden` : si l'utilisateur connecté n'a pas les accès requis **ou si l'utilisateur n'est pas admin**
+- `422 Unprocessable Entity` : si l'utilisateur oublie un champs
+- `404 Not Found` : si le jeu ou la zone n'existe pas
+
+### get games by zone
+
+**Description :**
+Récupère tous les jeux d'une zone
+
+**Route :** `GET /api/game-zones/games/:id`
+
+**Body :**
+Rien
+
+**Réponse :**
+- `200` : avec la liste des jeux de la zone : 
+```json
+[
+    "41892825-3726-464c-a5e6-12451102d89b",
+    "41892825-3726-464c-a5e6-12451102d89b",
+    ...
+]
+```
+
+### get zones by game
+
+**Description :**
+Récupère toutes les zones d'un jeu
+
+**Route :** `GET /api/game-zones/zones/:id`
+
+**Body :**
+Rien
+
+**Réponse :**
+- `200` : avec la liste des zones du jeu : 
+```json
+[
+    "41892825-3726-464c-a5e6-12451102d89b",
+    "41892825-3726-464c-a5e6-12451102d89b",
+    ...
+]
+```
+
