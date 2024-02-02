@@ -30,7 +30,7 @@ export default class extends BaseSchema {
       table.string('image').nullable()
       table.string('logo').nullable()
       table.string('video').nullable()
-      table.string('manual').nullable()
+      table.text('manual').nullable()
 
       // Dates
       table.timestamp('created_at', { useTz: true })

@@ -12,19 +12,19 @@ export default class UpdateGameValidator {
         name: schema.string.optional([
             rules.trim(),
             rules.escape(),
-            rules.minLength(3),
+            rules.minLength(2),
             rules.maxLength(255),
         ]),
         author: schema.string.optional([
             rules.trim(),
             rules.escape(),
-            rules.minLength(3),
+            rules.minLength(2),
             rules.maxLength(255),
         ]),
         editor: schema.string.optional([
             rules.trim(),
             rules.escape(),
-            rules.minLength(3),
+            rules.minLength(2),
             rules.maxLength(255),
         ]),
         maxPlayers: schema.number.optional([
@@ -44,25 +44,25 @@ export default class UpdateGameValidator {
         type: schema.string.optional([
             rules.trim(),
             rules.escape(),
-            rules.minLength(3),
+            rules.minLength(2),
             rules.maxLength(255),
         ]),
         mechanics: schema.string.optional([
             rules.trim(),
             rules.escape(),
-            rules.minLength(3),
+            rules.minLength(2),
             rules.maxLength(255),
         ]),
         theme: schema.string.optional([
             rules.trim(),
             rules.escape(),
-            rules.minLength(3),
+            rules.minLength(2),
             rules.maxLength(255),
         ]),
         tags: schema.string.optional([
             rules.trim(),
             rules.escape(),
-            rules.minLength(3),
+            rules.minLength(2),
             rules.maxLength(255),
         ]),
         description: schema.string.optional([
@@ -74,26 +74,26 @@ export default class UpdateGameValidator {
         image: schema.string.optional([
             rules.trim(),
             rules.escape(),
-            rules.minLength(3),
+            rules.minLength(2),
             rules.maxLength(255),
         ]),
         logo: schema.string.optional([
             rules.trim(),
             rules.escape(),
-            rules.minLength(3),
+            rules.minLength(2),
             rules.maxLength(255),
         ]),
         video: schema.string.optional([
             rules.trim(),
             rules.escape(),
-            rules.minLength(3),
+            rules.minLength(2),
             rules.maxLength(255),
         ]),
         manual: schema.string.optional([
             rules.trim(),
             rules.escape(),
-            rules.minLength(3),
-            rules.maxLength(255),
+            rules.minLength(2),
+            rules.maxLength(5000),
         ]),
     })
 
