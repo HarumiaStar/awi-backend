@@ -508,17 +508,14 @@ Attention : certains tests ne sont pas réalisés, il est possible que des erreu
     ],
     "slots": [
         {
-            "idSlot": 1,
             "startTime": "13/01/2021 10:00",
             "endTime": "13/01/2021 12:00"
         },
         {
-            "idSlot": 2,
             "startTime": "13/01/2021 14:00",
             "endTime": "13/01/2021 16:00"
         },
         {
-            "idSlot": 3,
             "startTime": "14/01/2021 18:00",
             "endTime": "14/01/2021 20:00"
         }
