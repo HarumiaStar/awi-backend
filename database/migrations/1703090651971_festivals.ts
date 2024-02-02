@@ -11,7 +11,7 @@ export default class extends BaseSchema {
       table.date('end_date').notNullable()
       table.string('address').notNullable()
       table.string('description').notNullable()
-      table.string('poster_path').nullable()
+      table.text('poster_path').nullable()
 
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })

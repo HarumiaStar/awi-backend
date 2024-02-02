@@ -27,9 +27,9 @@ export default class extends BaseSchema {
       table.text('description').nullable()
       
       // Links
-      table.string('image').nullable()
-      table.string('logo').nullable()
-      table.string('video').nullable()
+      table.text('image').nullable()
+      table.text('logo').nullable()
+      table.text('video').nullable()
       table.text('manual').nullable()
 
       // Dates

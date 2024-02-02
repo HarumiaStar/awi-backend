@@ -98,19 +98,19 @@ export default class CreateGameValidator {
             rules.trim(),
             rules.escape(),
             rules.minLength(2),
-            rules.maxLength(255),
+            rules.maxLength(5000),
         ]),
         logo: schema.string.optional([
             rules.trim(),
             rules.escape(),
             rules.minLength(2),
-            rules.maxLength(255),
+            rules.maxLength(5000),
         ]),
         video: schema.string.optional([
             rules.trim(),
             rules.escape(),
             rules.minLength(2),
-            rules.maxLength(255),
+            rules.maxLength(5000),
         ]),
         manual: schema.string.optional([
             rules.trim(),
