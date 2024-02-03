@@ -3,12 +3,15 @@ import Volunteer from 'App/Models/Volunteer'
 import UpdateVolunteerValidator from 'App/Validators/UpdateVolunteerValidator'
 
 export default class VolunteersController {
-  public async index({ }: HttpContextContract) {
-    return Volunteer.all()
+  public async index({ response }: HttpContextContract) {
+    const volunteers = await Volunteer.query().preload('associations')
+    return response.ok(volunteers)
   }
 
-  public async show({ request }: HttpContextContract) {
-    return Volunteer.findOrFail(request.params().id)
+  public async show({ request, response }: HttpContextContract) {
+    const volunteer = await Volunteer.findOrFail(request.params().id)
+    await volunteer.load('associations')
+    return response.ok(volunteer)
   }
 
   public async update({ request, response }: HttpContextContract) {
