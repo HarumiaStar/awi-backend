@@ -45,6 +45,15 @@ export default class UpdateAssociationValidator {
       }),
       rules.unique({ table: 'associations', column: 'mail' }),
     ]),
+    volunteers: schema.array.optional().members(
+      schema.string([
+        rules.uuid(),
+        rules.exists({
+          table: 'volunteers',
+          column: 'id',
+        }),
+      ])
+    ),
   })
 
   /**

@@ -26,6 +26,10 @@ export default class AssociationsController {
       const payload = await request.validate(UpdateAssociationValidator)
       const association: Association = await Association.findOrFail(request.params().id)
 
+      if (payload.volunteers) {
+        await association.related('volunteers').sync(payload.volunteers)
+      }
+
       await association.merge(payload).save()
 
       return response.status(200).json({ message: 'Association updated !' })

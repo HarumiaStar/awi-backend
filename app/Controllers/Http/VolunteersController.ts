@@ -1,4 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Association from 'App/Models/Association'
 import Volunteer from 'App/Models/Volunteer'
 import UpdateVolunteerValidator from 'App/Validators/UpdateVolunteerValidator'
 
@@ -19,7 +20,11 @@ export default class VolunteersController {
       const payload = await request.validate(UpdateVolunteerValidator)
       const volunteer = await Volunteer.findOrFail(request.params().id)
 
-      await volunteer.merge(payload).save() // TODO : check the following issue: 
+      if (payload.associations) {
+        volunteer.related('associations').sync(payload.associations)
+      }
+
+      await volunteer.merge(payload).save()
       /**
        * rgument of type '{ firstname: string | undefined; lastname: string | undefined; email: string | undefined; tshirt_size: TshirtSizeEnum | undefined; nb_edition_performed: bigint | undefined; ... 8 more ...; password: string | undefined; }' is not assignable to parameter of type 'Partial<{ id: string; firstname: string; lastname: string; email: string; lodging: LodgingEnum; address: string; phone: string; username: string; password: string; avatarUrl: string; nbEditionPerformed: bigint; ... 6 more ...; updatedAt: DateTime<...>; }>'.
           Types of property 'address' are incompatible.
