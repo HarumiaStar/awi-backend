@@ -6,10 +6,11 @@ export default class extends BaseSchema {
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.string('id').primary()
+      table.integer('id_zone').notNullable().unique()
       table.string('name').notNullable()
-      table.string('description').notNullable()
-      table.bigint('max_capacity').notNullable()
-      table.string('post_id').references('id').inTable('posts')
+      table.string('description').nullable()
+      table.integer('max_capacity').notNullable()
+      table.boolean('animation').notNullable()
       table.string('festival_id').references('id').inTable('festivals')
 
       table.timestamp('created_at', { useTz: true })

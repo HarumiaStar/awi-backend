@@ -51,7 +51,7 @@ export default class CreateFestivalValidator {
       rules.trim(),
       rules.escape(),
       rules.minLength(10),
-      rules.maxLength(255),
+      rules.maxLength(5000),
     ]),
   })
 

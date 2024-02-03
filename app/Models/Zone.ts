@@ -9,22 +9,21 @@ export default class Zone extends BaseModel {
   public id: string
 
   @column()
+  public idZone: number
+
+  @column()
   public name: string
 
   @column()
   public description: string
 
   @column()
-  public maxCapacity: bigint
+  public maxCapacity: number
+  @column()
+  public animation: boolean
 
   @column()
-  public postId: bigint
-
-  @belongsTo(() => Post)
-  public post: BelongsTo<typeof Post>
-
-  @column()
-  public festivalId: bigint
+  public festivalId: string
 
   @belongsTo(() => Festival)
   public festival: BelongsTo<typeof Festival>

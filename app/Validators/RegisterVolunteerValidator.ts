@@ -58,25 +58,25 @@ export default class RegisterVolunteerValidator {
     tshirt_size: schema.enum(Object.values(TshirtSizeEnum)),
     nb_edition_performed: schema.number([rules.required(), rules.trim(), rules.escape()]),
     lodging: schema.enum(Object.values(LodgingEnum)),
-    address: schema.string.nullableAndOptional([
+    address: schema.string.optional([
       rules.trim(),
       rules.escape(),
       rules.minLength(10),
       rules.maxLength(255),
     ]),
-    phone: schema.string.nullableAndOptional([
+    phone: schema.string.optional([
       rules.trim(),
       rules.escape(),
       rules.mobile({ locale: ['fr-FR', 'fr-BE'] }),
       rules.minLength(10),
     ]),
-    username: schema.string.nullableAndOptional([
+    username: schema.string.optional([
       rules.trim(),
       rules.escape(),
       rules.minLength(2),
       rules.maxLength(255),
     ]),
-    avatar_url: schema.string.nullableAndOptional([
+    avatar_url: schema.string.optional([
       rules.trim(),
       rules.escape(),
       rules.minLength(2),
