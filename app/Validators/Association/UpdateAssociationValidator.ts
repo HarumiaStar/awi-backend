@@ -1,7 +1,7 @@
 import { schema, CustomMessages, rules } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
-export default class LoginVolunteerValidator {
+export default class UpdateAssociationValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   /*
@@ -24,8 +24,13 @@ export default class LoginVolunteerValidator {
    *    ```
    */
   public schema = schema.create({
-    email: schema.string([
-      rules.required(),
+    name: schema.string.optional([
+      rules.trim(),
+      rules.escape(),
+      rules.unique({ table: 'associations', column: 'name' }),
+      rules.maxLength(255),
+    ]),
+    mail: schema.string.optional([
       rules.trim(),
       rules.escape(),
       rules.minLength(3),
@@ -38,8 +43,8 @@ export default class LoginVolunteerValidator {
         gmailRemoveDots: true,
         gmailRemoveSubaddress: true,
       }),
+      rules.unique({ table: 'associations', column: 'mail' }),
     ]),
-    password: schema.string([rules.required(), rules.trim(), rules.minLength(8)]),
   })
 
   /**

@@ -47,6 +47,15 @@ Route.group(() => {
     Route.put('/:id', 'FestivalsController.update').middleware('role:admin')
     Route.delete('/:id', 'FestivalsController.destroy').middleware('role:admin')
   }).prefix('/festivals')
+
+  // Association
+  Route.group(() => {
+    Route.get('/', 'AssociationsController.index')
+    Route.post('/', 'AssociationsController.store').middleware('role:admin')
+    Route.get('/:id', 'AssociationsController.show')
+    Route.put('/:id', 'AssociationsController.update').middleware('role:admin')
+    Route.delete('/:id', 'AssociationsController.destroy').middleware('role:admin')
+  }).prefix('/associations')
 }).prefix('/api')
 
 Route.get('/', () => {
