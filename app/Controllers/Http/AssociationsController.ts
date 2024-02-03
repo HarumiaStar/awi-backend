@@ -4,8 +4,9 @@ import CreateAssociationValidator from 'App/Validators/Association/CreateAssocia
 import UpdateAssociationValidator from 'App/Validators/Association/UpdateAssociationValidator'
 
 export default class AssociationsController {
-  public async index({}: HttpContextContract) {
-    return await Association.all()
+  public async index({ response }: HttpContextContract) {
+    const associations = await Association.query().preload('volunteers')
+    return response.ok(associations)
   }
 
   public async store({ request, response }: HttpContextContract) {
@@ -16,6 +17,7 @@ export default class AssociationsController {
 
   public async show({ request, response }: HttpContextContract) {
     const association = await Association.findOrFail(request.params().id)
+    await association.load('volunteers')
     return response.ok(association)
   }
 
