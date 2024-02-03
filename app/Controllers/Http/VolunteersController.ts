@@ -27,9 +27,9 @@ export default class VolunteersController {
       await volunteer.merge(payload).save()
       /**
        * rgument of type '{ firstname: string | undefined; lastname: string | undefined; email: string | undefined; tshirt_size: TshirtSizeEnum | undefined; nb_edition_performed: bigint | undefined; ... 8 more ...; password: string | undefined; }' is not assignable to parameter of type 'Partial<{ id: string; firstname: string; lastname: string; email: string; lodging: LodgingEnum; address: string; phone: string; username: string; password: string; avatarUrl: string; nbEditionPerformed: bigint; ... 6 more ...; updatedAt: DateTime<...>; }>'.
-          Types of property 'address' are incompatible.
-            Type 'string | null | undefined' is not assignable to type 'string | undefined'.
-              Type 'null' is not assignable to type 'string | undefined'.
+       Types of property 'address' are incompatible.
+       Type 'string | null | undefined' is not assignable to type 'string | undefined'.
+       Type 'null' is not assignable to type 'string | undefined'.
        */
       return response.status(200).json({ message: 'Volunteer updated !' })
     } catch (error) {
@@ -43,8 +43,9 @@ export default class VolunteersController {
   }
 
   public async showSelf({ auth, response }: HttpContextContract) {
-
     const volunteer = await auth.use('api').authenticate()
+
+    await volunteer.load('associations')
 
     const result = {
       firstname: volunteer.firstname,
@@ -58,7 +59,8 @@ export default class VolunteersController {
       tshirt_size: volunteer.tshirtSize,
       lodging: volunteer.lodging,
       food_regime: volunteer.foodRegime,
-      isAdmin: volunteer.isAdmin
+      isAdmin: volunteer.isAdmin,
+      associations: volunteer.associations,
     }
 
     return response.ok(result)
@@ -71,6 +73,10 @@ export default class VolunteersController {
 
     try {
       const payload = await request.validate(UpdateVolunteerValidator)
+
+      if (payload.associations) {
+        volunteer.related('associations').sync(payload.associations)
+      }
 
       await volunteer.merge(payload).save()
 
