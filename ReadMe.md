@@ -86,6 +86,7 @@ Quelques spécificités de la syntaxe des tests :
 - `avatar_url` : url de l'avatar de l'utilisateur (peut être vide)
 - `food_regime` : régime alimentaire de l'utilisateur (vegetarien, carnivore, autre)
 - `password` : mot de passe de l'utilisateur
+- `associations` : la liste complète des identifiants (uuid) des associations de l'utilisateur
 
 **Réponse :**
 Soit :
@@ -204,6 +205,7 @@ Met à jour les informations de l'utilisateur connecté
     "associations": ["dc088f27-699c-480b-9c24-a09464cba92e"]
 }
 ```
+*Si on veut enlever une association à l'utilisateur, on a juste à la retirer de la liste des associations.*
 
 **Réponse :**
 Soit :
@@ -1321,7 +1323,7 @@ Crée une association
 - `Authorization` : token d'authentification de l'utilisateur
 - `name` : le titre de l'association
 - `mail` : le mail de l'association
-- `volunteers` : la liste des bénévoles dans cette associations
+- `volunteers` : la liste complète des identifiants (uuid) des bénévoles dans cette associations
 
 **Réponse :**
 Soit :
@@ -1371,7 +1373,7 @@ Met à jour une association
 - `Authorization` : token d'authentification de l'utilisateur
 - `name` : le titre de l'association
 - `mail` : le mail de l'association
-- `volunteers` : la liste des bénévoles dans cette associations
+- `volunteers` : la liste complète des identifiants (uuid) des bénévoles dans cette associations
 
 **Réponse :**
 Soit :
