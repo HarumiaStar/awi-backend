@@ -1,8 +1,7 @@
 import { schema, CustomMessages, rules } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { FoodRegimeEnum, LodgingEnum, TshirtSizeEnum } from 'App/Models/Volunteer'
 
-export default class UpdateVolunteerValidator {
+export default class CreateAssociationValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   /*
@@ -25,19 +24,15 @@ export default class UpdateVolunteerValidator {
    *    ```
    */
   public schema = schema.create({
-    firstname: schema.string.optional([
+    name: schema.string([
+      rules.required(),
       rules.trim(),
       rules.escape(),
-      rules.minLength(2),
+      rules.unique({ table: 'associations', column: 'name' }),
       rules.maxLength(255),
     ]),
-    lastname: schema.string.optional([
-      rules.trim(),
-      rules.escape(),
-      rules.minLength(2),
-      rules.maxLength(255),
-    ]),
-    email: schema.string.optional([
+    mail: schema.string([
+      rules.required(),
       rules.trim(),
       rules.escape(),
       rules.minLength(3),
@@ -45,39 +40,13 @@ export default class UpdateVolunteerValidator {
         ignoreMaxLength: true,
         allowIpDomain: true,
       }),
-      rules.unique({ table: 'volunteers', column: 'email' }),
+      rules.normalizeEmail({
+        allLowercase: true,
+        gmailRemoveDots: true,
+        gmailRemoveSubaddress: true,
+      }),
+      rules.unique({ table: 'associations', column: 'mail' }),
     ]),
-    tshirt_size: schema.enum.optional(Object.values(TshirtSizeEnum)),
-    nb_edition_performed: schema.number.optional([rules.trim(), rules.escape()]),
-    lodging: schema.enum.optional(Object.values(LodgingEnum)),
-    address: schema.string.optional([
-      rules.trim(),
-      rules.escape(),
-      rules.minLength(10),
-      rules.maxLength(255),
-    ]),
-    phone: schema.string.optional([
-      rules.trim(),
-      rules.escape(),
-      rules.mobile({ locale: ['fr-FR', 'fr-BE'] }),
-      rules.minLength(10),
-    ]),
-    username: schema.string.optional([
-      rules.trim(),
-      rules.escape(),
-      rules.minLength(2),
-      rules.maxLength(255),
-    ]),
-    avatar_url: schema.string.optional([
-      rules.trim(),
-      rules.escape(),
-      rules.minLength(2),
-      rules.maxLength(255),
-    ]),
-    food_regime: schema.enum.optional(Object.values(FoodRegimeEnum)),
-    is_admin: schema.boolean.optional(),
-    is_present: schema.boolean.optional(),
-    password: schema.string.optional([rules.trim(), rules.minLength(8)]),
   })
 
   /**
