@@ -47,7 +47,6 @@ export default class RegisterVolunteerValidator {
       rules.email({
         ignoreMaxLength: true,
         allowIpDomain: true,
-        domainSpecificValidation: true,
       }),
       rules.normalizeEmail({
         allLowercase: true,
@@ -59,25 +58,25 @@ export default class RegisterVolunteerValidator {
     tshirt_size: schema.enum(Object.values(TshirtSizeEnum)),
     nb_edition_performed: schema.number([rules.required(), rules.trim(), rules.escape()]),
     lodging: schema.enum(Object.values(LodgingEnum)),
-    address: schema.string.nullableAndOptional([
+    address: schema.string.optional([
       rules.trim(),
       rules.escape(),
       rules.minLength(10),
       rules.maxLength(255),
     ]),
-    phone: schema.string.nullableAndOptional([
+    phone: schema.string.optional([
       rules.trim(),
       rules.escape(),
       rules.mobile({ locale: ['fr-FR', 'fr-BE'] }),
       rules.minLength(10),
     ]),
-    username: schema.string.nullableAndOptional([
+    username: schema.string.optional([
       rules.trim(),
       rules.escape(),
       rules.minLength(2),
       rules.maxLength(255),
     ]),
-    avatar_url: schema.string.nullableAndOptional([
+    avatar_url: schema.string.optional([
       rules.trim(),
       rules.escape(),
       rules.minLength(2),
@@ -85,6 +84,15 @@ export default class RegisterVolunteerValidator {
     ]),
     food_regime: schema.enum(Object.values(FoodRegimeEnum)),
     password: schema.string([rules.required(), rules.trim(), rules.minLength(8)]),
+    associations: schema.array.optional().members(
+      schema.string([
+        rules.uuid(),
+        rules.exists({
+          table: 'associations',
+          column: 'id',
+        }),
+      ])
+    ),
   })
 
   /**
@@ -105,24 +113,24 @@ export default class RegisterVolunteerValidator {
     'lastname.required': 'Le nom est requis',
     'lastname.minLength': 'Le nom doit contenir au moins 2 caractères',
     'lastname.maxLength': 'Le nom doit contenir au maximum 255 caractères',
-    'email.required': 'L\'email est requis',
-    'email.email': 'L\'email doit être valide',
-    'email.minLength': 'L\'email doit contenir au moins 3 caractères',
-    'email.unique': 'L\'email est déjà utilisé',
+    'email.required': "L'email est requis",
+    'email.email': "L'email doit être valide",
+    'email.minLength': "L'email doit contenir au moins 3 caractères",
+    'email.unique': "L'email est déjà utilisé",
     'tshirt_size.required': 'La taille de t-shirt est requise',
     'tshirt_size.enum': 'La taille de t-shirt doit être valide',
-    'nb_edition_performed.required': 'Le nombre d\'éditions effectuées est requis',
-    'nb_edition_performed.bigint': 'Le nombre d\'éditions effectuées doit être valide',
+    'nb_edition_performed.required': "Le nombre d'éditions effectuées est requis",
+    'nb_edition_performed.bigint': "Le nombre d'éditions effectuées doit être valide",
     'lodging.required': 'Le type de logement est requis',
     'lodging.enum': 'Le type de logement doit être valide',
-    'address.minLength': 'L\'adresse doit contenir au moins 10 caractères',
-    'address.maxLength': 'L\'adresse doit contenir au maximum 255 caractères',
+    'address.minLength': "L'adresse doit contenir au moins 10 caractères",
+    'address.maxLength': "L'adresse doit contenir au maximum 255 caractères",
     'phone.mobile': 'Le numéro de téléphone doit être valide',
     'phone.minLength': 'Le numéro de téléphone doit contenir au moins 10 caractères',
-    'username.minLength': 'Le nom d\'utilisateur doit contenir au moins 2 caractères',
-    'username.maxLength': 'Le nom d\'utilisateur doit contenir au maximum 255 caractères',
-    'avatar_url.minLength': 'L\'URL de l\'avatar doit contenir au moins 2 caractères',
-    'avatar_url.maxLength': 'L\'URL de l\'avatar doit contenir au maximum 255 caractères',
+    'username.minLength': "Le nom d'utilisateur doit contenir au moins 2 caractères",
+    'username.maxLength': "Le nom d'utilisateur doit contenir au maximum 255 caractères",
+    'avatar_url.minLength': "L'URL de l'avatar doit contenir au moins 2 caractères",
+    'avatar_url.maxLength': "L'URL de l'avatar doit contenir au maximum 255 caractères",
     'food_regime.required': 'Le régime alimentaire est requis',
     'food_regime.enum': 'Le régime alimentaire doit être valide',
     'is_admin.boolean': 'Le statut administrateur doit être valide',

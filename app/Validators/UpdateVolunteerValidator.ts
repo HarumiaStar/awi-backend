@@ -44,32 +44,31 @@ export default class UpdateVolunteerValidator {
       rules.email({
         ignoreMaxLength: true,
         allowIpDomain: true,
-        domainSpecificValidation: true,
       }),
       rules.unique({ table: 'volunteers', column: 'email' }),
     ]),
     tshirt_size: schema.enum.optional(Object.values(TshirtSizeEnum)),
     nb_edition_performed: schema.number.optional([rules.trim(), rules.escape()]),
     lodging: schema.enum.optional(Object.values(LodgingEnum)),
-    address: schema.string.nullableAndOptional([
+    address: schema.string.optional([
       rules.trim(),
       rules.escape(),
       rules.minLength(10),
       rules.maxLength(255),
     ]),
-    phone: schema.string.nullableAndOptional([
+    phone: schema.string.optional([
       rules.trim(),
       rules.escape(),
       rules.mobile({ locale: ['fr-FR', 'fr-BE'] }),
       rules.minLength(10),
     ]),
-    username: schema.string.nullableAndOptional([
+    username: schema.string.optional([
       rules.trim(),
       rules.escape(),
       rules.minLength(2),
       rules.maxLength(255),
     ]),
-    avatar_url: schema.string.nullableAndOptional([
+    avatar_url: schema.string.optional([
       rules.trim(),
       rules.escape(),
       rules.minLength(2),
@@ -79,6 +78,15 @@ export default class UpdateVolunteerValidator {
     is_admin: schema.boolean.optional(),
     is_present: schema.boolean.optional(),
     password: schema.string.optional([rules.trim(), rules.minLength(8)]),
+    associations: schema.array.optional().members(
+      schema.string([
+        rules.uuid(),
+        rules.exists({
+          table: 'associations',
+          column: 'id',
+        }),
+      ])
+    ),
   })
 
   /**

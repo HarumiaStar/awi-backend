@@ -1,7 +1,7 @@
 import { schema, CustomMessages, rules } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
-export default class UpdateFestivalValidator {
+export default class UpdateAssociationValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   /*
@@ -24,32 +24,36 @@ export default class UpdateFestivalValidator {
    *    ```
    */
   public schema = schema.create({
-    title: schema.string.optional([
+    name: schema.string.optional([
       rules.trim(),
       rules.escape(),
-      rules.minLength(10),
+      rules.unique({ table: 'associations', column: 'name' }),
       rules.maxLength(255),
     ]),
-    start_date: schema.date.optional({ format: 'dd/MM/yyyy' }, []),
-    end_date: schema.date.optional({ format: 'dd/MM/yyyy' }, []),
-    address: schema.string.optional([
+    mail: schema.string.optional([
       rules.trim(),
       rules.escape(),
-      rules.minLength(10),
-      rules.maxLength(255),
+      rules.minLength(3),
+      rules.email({
+        ignoreMaxLength: true,
+        allowIpDomain: true,
+      }),
+      rules.normalizeEmail({
+        allLowercase: true,
+        gmailRemoveDots: true,
+        gmailRemoveSubaddress: true,
+      }),
+      rules.unique({ table: 'associations', column: 'mail' }),
     ]),
-    description: schema.string.optional([
-      rules.trim(),
-      rules.escape(),
-      rules.minLength(10),
-      rules.maxLength(255),
-    ]),
-    poster_path: schema.string.optional([
-      rules.trim(),
-      rules.escape(),
-      rules.minLength(10),
-      rules.maxLength(5000),
-    ]),
+    volunteers: schema.array.optional().members(
+      schema.string([
+        rules.uuid(),
+        rules.exists({
+          table: 'volunteers',
+          column: 'id',
+        }),
+      ])
+    ),
   })
 
   /**
