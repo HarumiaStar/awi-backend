@@ -49,6 +49,7 @@ test.group('Routes', (group) => {
         lodging: LodgingEnum.aucun,
         food_regime: FoodRegimeEnum.carnivore,
         password: encryptWithHashSeed('password' + id),
+        associations: []
     }
     group.setup(async () => {
         await Database.beginGlobalTransaction()
