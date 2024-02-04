@@ -373,7 +373,7 @@ Soit :
 - `404 Not Found` : la donnée demandée n'existe pas
 - `422 Unprocessable Entity` : si l'utilisateur oublie un champs
 
-### update
+### updateCurrent
 
 **Description :**
 Mise à jour du festival en cours / celui qui arrive
@@ -1260,3 +1260,109 @@ Rien
 ]
 ```
 
+
+
+## Associations
+
+### index
+
+**Description :**
+Récupère toutes les associations
+
+**Route :** `GET api/associations`
+
+**Body :**
+- `Authorization` : token d'authentification de l'utilisateur
+
+**Réponse :**
+```json
+{
+  "id": "305440a7-6516-48a6-8582-6074e9e499bd",
+  "name": "",
+  "mail": ""
+},
+{
+}
+```
+
+### store
+
+**Description :**
+Crée une association
+
+**Route :** `POST api/associations/`
+
+**Body :**
+- `Authorization` : token d'authentification de l'utilisateur
+- `name` : le titre de l'association
+- `mail` : le mail de l'association
+
+**Réponse :**
+Soit :
+- `200` : si l'association a été crée
+- `401 Unauthorized` : si l'utilisateur n'est pas connecté
+- `403 Forbidden` : si l'utilisateur connecté n'a pas les accès requis pour faire cette action
+- `422 Unprocessable Entity` : si l'utilisateur oublie un champs
+
+### show
+
+**Description :**
+Crée une association
+
+**Route :** `GET api/associations/:id`
+
+**Body :**
+- `Authorization` : token d'authentification de l'utilisateur
+- `name` : le titre de l'association
+- `mail` : le mail de l'association
+
+**Réponse :**
+Soit :
+- `200` : si l'association a été crée
+```js
+{
+  "id": "533f8a6d-1aca-4188-920f-25c09f3dac39",
+  "name": "PolyEarth3",
+  "mail": "aaaaaa@gmail.com",
+  "created_at": "2024-02-03T17:10:37.340+01:00",
+  "updated_at": "2024-02-03T17:10:37.340+01:00"
+}
+```
+- `401 Unauthorized` : si l'utilisateur n'est pas connecté
+- `403 Forbidden` : si l'utilisateur connecté n'a pas les accès requis pour faire cette action
+- `422 Unprocessable Entity` : si l'utilisateur oublie un champs
+
+### update
+
+**Description :**
+Met à jour une association
+
+**Route :** `PUT api/associations/:id`
+
+**Body :**
+- `Authorization` : token d'authentification de l'utilisateur
+- `name` : le titre de l'association
+- `mail` : le mail de l'association
+
+**Réponse :**
+Soit :
+- `200` : si l'association a été crée
+- `401 Unauthorized` : si l'utilisateur n'est pas connecté
+- `403 Forbidden` : si l'utilisateur connecté n'a pas les accès requis pour faire cette action
+- `422 Unprocessable Entity` : si l'utilisateur oublie un champs
+
+### destroy
+
+**Description :**
+Supprime une association
+
+**Route :** `DELETE api/associations/:id`
+
+**Body :**
+- `Authorization` : token d'authentification de l'utilisateur
+
+**Réponse :**
+Soit :
+- `200` : si l'association a été supprimé
+- `401 Unauthorized` : si l'utilisateur n'est pas connecté
+- `403 Forbidden` : si l'utilisateur connecté n'a pas les accès requis pour faire cette action

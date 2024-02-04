@@ -32,7 +32,6 @@ export default class LoginVolunteerValidator {
       rules.email({
         ignoreMaxLength: true,
         allowIpDomain: true,
-        domainSpecificValidation: true,
       }),
       rules.normalizeEmail({
         allLowercase: true,

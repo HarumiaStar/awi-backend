@@ -44,7 +44,6 @@ export default class UpdateVolunteerValidator {
       rules.email({
         ignoreMaxLength: true,
         allowIpDomain: true,
-        domainSpecificValidation: true,
       }),
       rules.unique({ table: 'volunteers', column: 'email' }),
     ]),
