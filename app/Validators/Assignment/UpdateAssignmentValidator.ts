@@ -1,7 +1,7 @@
 import { schema, CustomMessages, rules } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
-export default class CreateWisheValidator {
+export default class UpdateAssignmentValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   /*
@@ -24,22 +24,14 @@ export default class CreateWisheValidator {
    *    ```
    */
   public schema = schema.create({
-    zone_id: schema.string([
-      rules.required(),
-      rules.uuid(),
-      rules.exists({ table: 'zones', column: 'id' }),
-    ]),
-    slot_id: schema.string([
-      rules.required(),
-      rules.uuid(),
-      rules.exists({ table: 'slots', column: 'id' }),
-    ]),
-    volunteer_id: schema.string([
-      rules.required(),
+    volunteer_id: schema.string.optional([
       rules.uuid(),
       rules.exists({ table: 'volunteers', column: 'id' }),
+      rules.unique({ table: 'assignments', column: 'volunteer_id' }),
     ]),
-    is_referent: schema.boolean([rules.required()]),
+    zone_id: schema.string.optional([rules.uuid(), rules.exists({ table: 'zones', column: 'id' })]),
+    slot_id: schema.string.optional([rules.uuid(), rules.exists({ table: 'slots', column: 'id' })]),
+    is_referent: schema.boolean.optional(),
   })
 
   /**

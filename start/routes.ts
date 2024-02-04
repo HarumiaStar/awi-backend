@@ -110,6 +110,15 @@ Route.group(() => {
     Route.put('/:id', 'WishesController.update')
     Route.delete('/:id', 'WishesController.destroy')
   }).prefix('/wishes')
+
+  // Assignment
+  Route.group(() => {
+    Route.get('/', 'AssignmentsController.index')
+    Route.post('/', 'AssignmentsController.store').middleware('role:admin')
+    Route.get('/:id', 'AssignmentsController.show')
+    Route.put('/:id', 'AssignmentsController.update').middleware('role:admin')
+    Route.delete('/:id', 'AssignmentsController.destroy').middleware('role:admin')
+  }).prefix('/assignments')
 }).prefix('/api')
 
 Route.get('/', () => {

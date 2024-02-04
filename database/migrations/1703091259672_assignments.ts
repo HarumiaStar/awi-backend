@@ -6,9 +6,9 @@ export default class extends BaseSchema {
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.string('id').primary()
-      table.string('volunteer_id').references('id').inTable('volunteers')
-      table.string('zone_id').references('id').inTable('zones')
-      table.string('slot_id').references('id').inTable('slots')
+      table.string('volunteer_id').references('id').inTable('volunteers').unique().notNullable()
+      table.string('zone_id').references('id').inTable('zones').notNullable()
+      table.string('slot_id').references('id').inTable('slots').notNullable()
       table.boolean('is_referent').notNullable()
 
       table.timestamp('created_at', { useTz: true })
