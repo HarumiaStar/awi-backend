@@ -1,5 +1,4 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Association from 'App/Models/Association'
 import Volunteer from 'App/Models/Volunteer'
 import UpdateVolunteerValidator from 'App/Validators/UpdateVolunteerValidator'
 
