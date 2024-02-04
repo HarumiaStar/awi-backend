@@ -78,6 +78,15 @@ export default class UpdateVolunteerValidator {
     is_admin: schema.boolean.optional(),
     is_present: schema.boolean.optional(),
     password: schema.string.optional([rules.trim(), rules.minLength(8)]),
+    associations: schema.array.optional().members(
+      schema.string([
+        rules.uuid(),
+        rules.exists({
+          table: 'associations',
+          column: 'id',
+        }),
+      ])
+    ),
   })
 
   /**
