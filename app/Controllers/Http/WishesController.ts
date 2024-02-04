@@ -3,8 +3,8 @@ import Slot from 'App/Models/Slot'
 import Volunteer from 'App/Models/Volunteer'
 import Wishe from 'App/Models/Wishe'
 import Zone from 'App/Models/Zone'
-import CreateWhisheValidator from 'App/Validators/Whishe/CreateWhisheValidator'
-import UpdateWhisheValidator from 'App/Validators/Whishe/UpdateWhisheValidator'
+import CreateWisheValidator from 'App/Validators/Wishe/CreateWisheValidator'
+import UpdateWisheValidator from 'App/Validators/Wishe/UpdateWisheValidator'
 
 export default class WishesController {
   public async index({ response }: HttpContextContract) {
@@ -14,7 +14,7 @@ export default class WishesController {
 
   public async store({ request, response, auth }: HttpContextContract) {
     const me = await auth.use('api').authenticate()
-    const payload = await request.validate(CreateWhisheValidator)
+    const payload = await request.validate(CreateWisheValidator)
 
     if (me.id !== payload.volunteer_id || !me.isAdmin) {
       return response.forbidden({ message: 'You can only create wishes for yourself' })
@@ -35,7 +35,7 @@ export default class WishesController {
   public async update({ request, response, auth }: HttpContextContract) {
     const me = await auth.use('api').authenticate()
     try {
-      const payload = await request.validate(UpdateWhisheValidator)
+      const payload = await request.validate(UpdateWisheValidator)
 
       if (me.id !== payload.volunteer_id || !me.isAdmin) {
         return response.forbidden({ message: 'You can only update wishes for yourself' })
