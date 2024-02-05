@@ -1,4 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Database from '@ioc:Adonis/Lucid/Database'
 import Festival from 'App/Models/Festival'
 import Game from 'App/Models/Game'
 import GameZone from 'App/Models/GameZone'
@@ -139,6 +140,8 @@ export default class FestivalsController {
   }
 
   public async new({ request, response }: HttpContextContract) {
+    const transaction = await Database.transaction()
+
     const payload = await request.validate(NewFestivalValidator)
 
     const festivalData : {
@@ -157,7 +160,7 @@ export default class FestivalsController {
       endDate: payload.end_date.toJSDate(),
     }
 
-    const festival = await Festival.create(festivalData)
+    const festival = await Festival.create(festivalData, transaction)
 
 
     const festId = festival.id;
@@ -185,7 +188,7 @@ export default class FestivalsController {
         manual: jeu.manual,
       }
     })
-    const games = await Game.createMany(gamesData)
+    const games = await Game.createMany(gamesData, transaction)
 
     const zonesData = payload.zones.map((zone: any) => {
       return {
@@ -198,14 +201,15 @@ export default class FestivalsController {
       }
     });
 
-    const zones = await Zone.createMany(zonesData)
+    const zones = await Zone.createMany(zonesData, transaction)
 
     const gameZonesData = payload.gameZones.map((jeu: any) => {
       const game = games.find((game) => game.idGame === jeu.idJeu)
       const zone = zones.find((zone) => zone.idZone === jeu.idZone)
 
       if (!game || !zone) {
-        throw new Error('Game-zone dont exist')
+        transaction.rollback()
+        throw new Error('Game-zone dont exist : ' + jeu.idJeu + ' ' + jeu.idZone)
       }
 
       return {
@@ -214,7 +218,7 @@ export default class FestivalsController {
       }
     })
 
-    await GameZone.createMany(gameZonesData)
+    await GameZone.createMany(gameZonesData, transaction)
 
     const slotsData = payload.slots.map((slot: {startTime: DateTime<boolean>;endTime: DateTime<boolean>;}) => {
       return {
@@ -223,10 +227,10 @@ export default class FestivalsController {
       }
     })
 
-    await Slot.createMany(slotsData)
+    await Slot.createMany(slotsData, transaction)
 
 
-
+    await transaction.commit()
     return response.ok({ message: 'Festival created !'})
   }
 }
