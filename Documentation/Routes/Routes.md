@@ -1,21 +1,21 @@
 # Routes
 
-## [Authentification](./Routes/Authentification/Authentification.md)
+## [Authentification](./Authentification/Authentification.md)
 
-## [Volunteers](./Routes/Volunteers/Volunteers.md)
+## [Volunteers](./Volunteers/Volunteers.md)
 
-## [Festivals](./Routes/Festivals/Festivals.md)
+## [Festivals](./Festivals/Festivals.md)
 
-## [Games](./Routes/Games/Games.md)
+## [Games](./Games/Games.md)
 
-## [Zones](./Routes/Zones/Zones.md)
+## [Zones](./Zones/Zones.md)
 
-## [Slots](./Routes/Slots/Slots.md)
+## [Slots](./Slots/Slots.md)
 
-## [GameZone](./Routes/GameZone/GameZone.md)
+## [GameZone](./GameZone/GameZone.md)
 
-## [Association](./Routes/Association/Association.md)
+## [Association](./Association/Association.md)
 
-## [Wishes](./Routes/Wishes/Wishes.md)
+## [Wishes](./Wishes/Wishes.md)
 
-## [Assignments](./Routes/Assignments/Assignments.md)
+## [Assignments](./Assignments/Assignments.md)
