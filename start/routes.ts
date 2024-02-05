@@ -115,6 +115,7 @@ Route.group(() => {
   Route.group(() => {
     Route.get('/', 'AssignmentsController.index')
     Route.post('/', 'AssignmentsController.store').middleware('role:admin')
+    Route.post('/all', 'AssignmentsController.storeAll').middleware('role:admin')
     Route.get('/:id', 'AssignmentsController.show')
     Route.put('/:id', 'AssignmentsController.update').middleware('role:admin')
     Route.delete('/:id', 'AssignmentsController.destroy').middleware('role:admin')
