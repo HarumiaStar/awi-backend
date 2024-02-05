@@ -24,12 +24,6 @@ export default class VolunteersController {
       }
 
       await volunteer.merge(payload).save()
-      /**
-       * rgument of type '{ firstname: string | undefined; lastname: string | undefined; email: string | undefined; tshirt_size: TshirtSizeEnum | undefined; nb_edition_performed: bigint | undefined; ... 8 more ...; password: string | undefined; }' is not assignable to parameter of type 'Partial<{ id: string; firstname: string; lastname: string; email: string; lodging: LodgingEnum; address: string; phone: string; username: string; password: string; avatarUrl: string; nbEditionPerformed: bigint; ... 6 more ...; updatedAt: DateTime<...>; }>'.
-       Types of property 'address' are incompatible.
-       Type 'string | null | undefined' is not assignable to type 'string | undefined'.
-       Type 'null' is not assignable to type 'string | undefined'.
-       */
       return response.status(200).json({ message: 'Volunteer updated !' })
     } catch (error) {
       return response.badRequest(error.messages)
@@ -47,6 +41,7 @@ export default class VolunteersController {
     await volunteer.load('associations')
 
     const result = {
+      id: volunteer.id,
       firstname: volunteer.firstname,
       lastname: volunteer.lastname,
       email: volunteer.email,

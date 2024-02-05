@@ -6,6 +6,7 @@ import Slot from 'App/Models/Slot'
 import Zone from 'App/Models/Zone'
 
 export default class Wishe extends BaseModel {
+  @column({ isPrimary: true })
   public id: string
 
   @column()
@@ -15,7 +16,7 @@ export default class Wishe extends BaseModel {
   public volunteer: BelongsTo<typeof Volunteer>
 
   @column()
-  public zonneId: string
+  public zoneId: string
 
   @belongsTo(() => Zone)
   public zone: BelongsTo<typeof Zone>
