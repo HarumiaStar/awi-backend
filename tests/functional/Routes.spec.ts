@@ -124,7 +124,7 @@ test.group('Routes', (group) => {
 
         assert.equal(response.status(), 200);
 
-        const volunteerData : any = baseVolunteerData;
+        let volunteerData : any = baseVolunteerData;
         volunteerData.firstname = 'Jean' + id;
         volunteerData.isAdmin = false;
         delete volunteerData.password;
@@ -133,6 +133,9 @@ test.group('Routes', (group) => {
             console.log(response.body());
             console.log(volunteerData);
         }
+
+        // Add the id to the volunteerData
+        volunteerData.id = response.body().id;
 
         assert.equal(compareAny(response.body(), volunteerData), true);
     })
