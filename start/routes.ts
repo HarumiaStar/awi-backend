@@ -28,12 +28,12 @@ Route.group(() => {
   Route.get('/auth/hash-seed', 'AuthController.getHashSeed')
 
   // Volunteer
-  Route.get('/volunteers', 'VolunteersController.index')
-  Route.get('/volunteers/me', 'VolunteersController.showSelf')
-  Route.put('/volunteers/me', 'VolunteersController.updateSelf')
-  Route.get('/volunteers/:id', 'VolunteersController.show')
-  Route.put('/volunteers/:id', 'VolunteersController.update')
-  Route.delete('/volunteers/:id', 'VolunteersController.destroy')
+  Route.get('/volunteers', 'VolunteersController.index').middleware('auth')
+  Route.get('/volunteers/me', 'VolunteersController.showSelf').middleware('auth')
+  Route.put('/volunteers/me', 'VolunteersController.updateSelf').middleware('auth')
+  Route.get('/volunteers/:id', 'VolunteersController.show').middleware('auth')
+  Route.put('/volunteers/:id', 'VolunteersController.update').middleware('auth')
+  Route.delete('/volunteers/:id', 'VolunteersController.destroy').middleware('auth')
 
   // Festival
   Route.group(() => {
@@ -60,7 +60,6 @@ Route.group(() => {
     Route.delete('/:id', 'GamesController.destroy').middleware('role:admin')
   }).prefix('/games')
 
-
   // Zone
   Route.group(() => {
     Route.get('/', 'ZonesController.index')
@@ -69,7 +68,9 @@ Route.group(() => {
     Route.get('/:id', 'ZonesController.show')
     Route.put('/:id', 'ZonesController.update').middleware('role:admin')
     Route.delete('/:id', 'ZonesController.destroy').middleware('role:admin')
-  }).prefix('/zones')
+  })
+    .prefix('/zones')
+    .middleware('auth')
 
   // Slot
   Route.group(() => {
@@ -79,7 +80,9 @@ Route.group(() => {
     Route.get('/:id', 'SlotsController.show')
     Route.put('/:id', 'SlotsController.update').middleware('role:admin')
     Route.delete('/:id', 'SlotsController.destroy').middleware('role:admin')
-  }).prefix('/slots')
+  })
+    .prefix('/slots')
+    .middleware('auth')
 
   // GameZone
   Route.group(() => {
@@ -91,7 +94,9 @@ Route.group(() => {
     Route.delete('/', 'GameZoneController.destroy').middleware('role:admin')
     Route.get('/zones/:id', 'GameZoneController.listZones')
     Route.get('/games/:id', 'GameZoneController.listGames')
-  }).prefix('/game-zones')
+  })
+    .prefix('/game-zones')
+    .middleware('auth')
 
   // Association
   Route.group(() => {
@@ -100,7 +105,9 @@ Route.group(() => {
     Route.get('/:id', 'AssociationsController.show')
     Route.put('/:id', 'AssociationsController.update').middleware('role:admin')
     Route.delete('/:id', 'AssociationsController.destroy').middleware('role:admin')
-  }).prefix('/associations')
+  })
+    .prefix('/associations')
+    .middleware('auth')
 
   // Wishe
   Route.group(() => {
@@ -109,7 +116,9 @@ Route.group(() => {
     Route.get('/:id', 'WishesController.show')
     Route.put('/:id', 'WishesController.update')
     Route.delete('/:id', 'WishesController.destroy')
-  }).prefix('/wishes')
+  })
+    .prefix('/wishes')
+    .middleware('auth')
 
   // Assignment
   Route.group(() => {
@@ -119,7 +128,9 @@ Route.group(() => {
     Route.get('/:id', 'AssignmentsController.show')
     Route.put('/:id', 'AssignmentsController.update').middleware('role:admin')
     Route.delete('/:id', 'AssignmentsController.destroy').middleware('role:admin')
-  }).prefix('/assignments')
+  })
+    .prefix('/assignments')
+    .middleware('auth')
 }).prefix('/api')
 
 Route.get('/', () => {
