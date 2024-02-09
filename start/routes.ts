@@ -68,9 +68,7 @@ Route.group(() => {
     Route.get('/:id', 'ZonesController.show')
     Route.put('/:id', 'ZonesController.update').middleware('role:admin')
     Route.delete('/:id', 'ZonesController.destroy').middleware('role:admin')
-  })
-    .prefix('/zones')
-    .middleware('auth')
+  }).prefix('/zones')
 
   // Slot
   Route.group(() => {
@@ -80,9 +78,7 @@ Route.group(() => {
     Route.get('/:id', 'SlotsController.show')
     Route.put('/:id', 'SlotsController.update').middleware('role:admin')
     Route.delete('/:id', 'SlotsController.destroy').middleware('role:admin')
-  })
-    .prefix('/slots')
-    .middleware('auth')
+  }).prefix('/slots')
 
   // GameZone
   Route.group(() => {
